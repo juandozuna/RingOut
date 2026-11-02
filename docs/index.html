@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RingOut: real-time feedback suppression on an iPad</title>
+  <meta name="description" content="RingOut turns an M4 iPad and a class-compliant USB audio interface into a two-channel feedback-suppression insert for live vocal mics. In development.">
+  <meta name="theme-color" content="#0B0D10">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://juandozuna.github.io/RingOut/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="RingOut">
+  <meta property="og:title" content="RingOut: the De-Feedback result on hardware you already carry">
+  <meta property="og:description" content="A two-channel real-time feedback-suppression insert for live vocal mics, built on an M4 iPad and a USB audio interface. V1 in development.">
+  <meta property="og:url" content="https://juandozuna.github.io/RingOut/">
+  <meta property="og:image" content="https://juandozuna.github.io/RingOut/assets/screens/live.png">
+  <meta property="og:image:width" content="1376">
+  <meta property="og:image:height" content="1032">
+  <meta property="og:image:alt" content="RingOut live screen with two channel strips">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/icon.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script src="hero.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap header-row">
+      <a class="brand" href="#top" aria-label="RingOut home">
+        <img src="assets/icon.svg" width="28" height="28" alt="">
+        <span>RingOut</span>
+      </a>
+      <nav aria-label="Sections">
+        <ul class="nav-list">
+          <li><a href="#how">How it works</a></li>
+          <li><a href="#latency">Latency</a></li>
+          <li><a href="#rig">Rig</a></li>
+          <li><a href="#compare">Compare</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a class="nav-gh" href="https://github.com/juandozuna/RingOut">GitHub</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero: the page opens as a live channel strip -->
+    <section class="hero" id="top" aria-labelledby="hero-title" data-state="safe">
+      <div class="hero-edge" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="status-pill"><span class="dot" aria-hidden="true"></span>V1 in development</p>
+          <h1 id="hero-title" class="wordmark">RingOut</h1>
+          <p class="pitch">Real-time feedback suppression for live vocal mics. An M4 iPad and a USB audio interface become a two-channel insert.</p>
+          <p class="pitch-sub">The De-Feedback result, on hardware you already carry.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://github.com/juandozuna/RingOut">View on GitHub</a>
+            <a class="btn btn-ghost" href="https://github.com/juandozuna/RingOut#readme">Read the README</a>
+          </div>
+        </div>
+
+        <figure class="strip" aria-labelledby="strip-caption">
+          <div class="strip-banner" aria-hidden="true">
+            <span>Scarlett 4i4 · 48 kHz</span>
+            <span class="tabular">32 samples</span>
+          </div>
+          <div class="strip-head">
+            <span class="strip-name">Insert 1</span>
+            <span class="strip-topo">Console insert</span>
+          </div>
+          <div class="ribbon">
+            <canvas id="ribbon" width="800" height="300" aria-hidden="true"></canvas>
+            <div class="axis" aria-hidden="true">
+              <span style="--x:0">100</span><span style="--x:.4346">1k</span><span class="axis-10k" style="--x:.8691">10k</span><span style="--x:1">20k Hz</span>
+            </div>
+          </div>
+          <div class="strip-foot">
+            <p class="readout" id="readout" aria-live="off">Stable. No notches active.</p>
+            <button class="pause" id="pause" type="button" aria-pressed="false">Pause</button>
+          </div>
+          <figcaption id="strip-caption" class="sr-only">
+            Illustration of the channel strip: a ring appears in the spectrum and the strip turns red, an amber notch lands on that frequency and the strip turns amber, then the notch releases and the strip returns to green.
+          </figcaption>
+        </figure>
+      </div>
+
+      <ol class="legend wrap" aria-label="What the strip colours mean">
+        <li class="legend-ring"><b>Red</b> A ring was caught in the last two seconds.</li>
+        <li class="legend-work"><b>Amber</b> A notch is holding the ring down while the voice passes.</li>
+        <li class="legend-safe"><b>Green</b> The notch has released. Nothing to do.</li>
+      </ol>
+    </section>
+
+    <!-- How it works -->
+    <section class="section" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <h2 id="how-title">The notch is the airbag. The model is the suspension.</h2>
+        <div class="split">
+          <p class="lede">Notch filters only act once a ring is already partly audible, and every notch left in place is a permanent EQ cut. A neural voice isolator keeps the voice clean but can be pushed past its limits near the edge. RingOut runs both in series, in one audio callback, with no added delay.</p>
+          <div class="pair">
+            <div class="pair-item pair-airbag">
+              <h3>Detector and notch bank</h3>
+              <p>Spots a ring in its first 20–40&nbsp;ms and drops a 1/60-octave notch on it. Notches are temporary: they release once the ring is gone, so the steady-state count stays near zero.</p>
+            </div>
+            <div class="pair-item pair-suspension">
+              <h3>Voice isolator</h3>
+              <p>Separates the voice from feedback, room and noise energy the notches left behind, using the detector's findings as a hint.</p>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="sub">Per-channel chain, in order</h3>
+        <ol class="chain">
+          <li><b>Input conditioning</b><span>DC block, 80&nbsp;Hz high-pass, metering</span></li>
+          <li><b>Feedback detector</b><span>Up to 8 candidate frequencies with a confidence score, every buffer</span></li>
+          <li><b>Adaptive notch bank</b><span>Up to 8 notches, −6 to −18&nbsp;dB, released after the ring decays</span></li>
+          <li><b>Voice isolator</b><span>Processes the notched signal, guided by the detector</span></li>
+          <li><b>Strength mix</b><span>Equal-power blend with the dry input. 0&nbsp;% is a bit-exact bypass</span></li>
+          <li><b>Output limiter</b><span>−0.3&nbsp;dBFS, metering, bypass logic</span></li>
+        </ol>
+
+        <aside class="note" aria-label="Current build status">
+          <p><b>What the current build ships.</b> The algorithmic detector and adaptive notch bank are being built now. The neural isolator is planned; until it is trained, a DSP stand-in fills its slot so the chain, metering and Strength control can be tested end to end.</p>
+        </aside>
+
+        <h3 class="sub" id="topologies">Where it goes in your signal path</h3>
+        <p class="sub-lede">RingOut is an insert. Setup asks which wiring you use and labels the strips to match.</p>
+        <div class="topologies">
+          <div class="topo">
+            <h4><span class="topo-key">A</span> Console insert <em>recommended</em></h4>
+            <ul class="path" aria-label="Signal path for topology A">
+              <li>Insert send</li><li>Interface line in</li><li class="me">RingOut</li><li>Interface line out</li><li>Insert return</li>
+            </ul>
+            <p>The console keeps its preamp, EQ and dynamics. RingOut sees the signal post-preamp, pre-EQ.</p>
+          </div>
+          <div class="topo">
+            <h4><span class="topo-key">B</span> Mic in, line out</h4>
+            <ul class="path" aria-label="Signal path for topology B">
+              <li>Mic</li><li>Interface preamp</li><li class="me">RingOut</li><li>Interface line out</li><li>Console line in</li>
+            </ul>
+            <p>For small analog boards and powered mixers without inserts. Gain trim and a 48&nbsp;V indicator are on screen.</p>
+          </div>
+          <div class="topo">
+            <h4><span class="topo-key">C</span> Group insert after an automixer</h4>
+            <ul class="path" aria-label="Signal path for topology C">
+              <li>Speech mics</li><li>Automix group</li><li>Insert send</li><li class="me">RingOut</li><li>Insert return</li>
+            </ul>
+            <p>One channel covers a whole panel. Rated for up to three simultaneous talkers.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live screen -->
+    <section class="section section-alt" id="screens" aria-labelledby="screens-title">
+      <div class="wrap">
+        <h2 id="screens-title">Readable from across a dark booth</h2>
+        <p class="sub-lede">The whole strip turns the channel's state colour, so a volunteer can tell at a glance whether anything needs doing. Strength, Bypass and Mute are always on screen.</p>
+        <figure class="device device-main">
+          <img src="assets/screens/live.png" width="1376" height="1032" alt="Live screen: two channel strips side by side, each with input and output meters, a spectrum ribbon with notch markers, a Strength dial and Bypass and Mute buttons.">
+          <figcaption>Live. Two strips, one Strength dial each, measured latency in the banner.</figcaption>
+        </figure>
+        <div class="device-row">
+          <figure class="device">
+            <img src="assets/screens/setup.png" width="1376" height="1032" alt="Setup wizard: a ring that turns green when a USB audio interface is detected, with progress chips for interface, wiring and calibration." loading="lazy">
+            <figcaption>Setup. Guided from first launch to passing audio.</figcaption>
+          </figure>
+          <figure class="device">
+            <img src="assets/screens/notches.png" width="1376" height="1032" alt="Notch detail: a large spectrum with active and fixed notch markers above a table of frequency, depth, age and type." loading="lazy">
+            <figcaption>Notches. Every active and fixed notch, with ring-out mode.</figcaption>
+          </figure>
+          <figure class="device">
+            <img src="assets/screens/settings.png" width="1376" height="1032" alt="Settings: grouped list for audio, channels, show files, lock, power and license." loading="lazy">
+            <figcaption>Settings. Buffer size with measured latency next to each option.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- V1 targets -->
+    <section class="section" id="targets" aria-labelledby="targets-title">
+      <div class="wrap">
+        <h2 id="targets-title">What V1 has to prove</h2>
+        <p class="sub-lede">These are targets, not results. Nothing below has been measured on the lab rig yet. The first two are launch gates.</p>
+        <div class="table-scroll" role="region" aria-labelledby="targets-title" tabindex="0">
+          <table class="data">
+            <thead><tr><th scope="col">Metric</th><th scope="col">V1 target</th></tr></thead>
+            <tbody>
+              <tr class="gate"><th scope="row">Added gain before feedback <small>single vocal, 2&nbsp;m mic to PA, Strength 80&nbsp;%</small></th><td>≥ 6&nbsp;dB over bypass <small>stretch ≥ 9&nbsp;dB</small></td></tr>
+              <tr class="gate"><th scope="row">Continuous run, two channels <small>25&nbsp;°C ambient, on mains</small></th><td>≥ 4&nbsp;h with no dropout or thermal throttle</td></tr>
+              <tr><th scope="row">Round-trip latency <small>M4 iPad Pro + Scarlett 4th gen, 48&nbsp;kHz</small></th><td>≤ 6&nbsp;ms typical, ≤ 8&nbsp;ms worst case</td></tr>
+              <tr><th scope="row">Audible artifacts <small>blind AB, clean vocal, Strength 80&nbsp;%</small></th><td>Not detected by 4 of 5 trained listeners</td></tr>
+              <tr><th scope="row">First launch to passing audio</th><td>≤ 5&nbsp;min with guided setup</td></tr>
+              <tr><th scope="row">Crash-free sessions</th><td>≥ 99.5&nbsp;%</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latency -->
+    <section class="section section-alt" id="latency" aria-labelledby="latency-title">
+      <div class="wrap">
+        <h2 id="latency-title">Where every millisecond goes</h2>
+        <p class="sub-lede">The engine adds zero samples. All latency is buffering in Core Audio plus the interface's converters and USB transport. The app measures its real round trip with a loopback click and shows it in ms and samples, so you can set console delay compensation from it.</p>
+
+        <div class="bars" aria-hidden="true">
+          <div class="bars-scale"><span style="--at:0">0</span><span style="--at:.25">2</span><span style="--at:.5">4</span><span class="bars-target" style="--at:.75">6 ms target</span><span style="--at:1">8 ms</span></div>
+          <div class="bar-row"><span class="bar-label">32 <small>default</small></span><div class="bar"><i class="seg seg-conv" style="--w:1"></i><i class="seg seg-buf" style="--w:.67"></i><i class="seg seg-buf" style="--w:.67"></i><i class="seg seg-conv" style="--w:1"></i></div><span class="bar-total">3.0–3.8</span></div>
+          <div class="bar-row"><span class="bar-label">64</span><div class="bar"><i class="seg seg-conv" style="--w:1"></i><i class="seg seg-buf" style="--w:1.33"></i><i class="seg seg-buf" style="--w:1.33"></i><i class="seg seg-conv" style="--w:1"></i></div><span class="bar-total">4.3–5.1</span></div>
+          <div class="bar-row"><span class="bar-label">128</span><div class="bar"><i class="seg seg-conv" style="--w:1"></i><i class="seg seg-buf" style="--w:2.67"></i><i class="seg seg-buf" style="--w:2.67"></i><i class="seg seg-conv" style="--w:1"></i></div><span class="bar-total">7.0–7.8</span></div>
+          <p class="bars-key"><span class="key-item"><i class="key key-conv"></i>Converters and USB</span><span class="key-item"><i class="key key-buf"></i>Core Audio buffers (input, output)</span></p>
+        </div>
+
+        <div class="table-scroll" role="region" aria-label="Latency budget at 48 kHz" tabindex="0">
+          <table class="data latency">
+            <caption>Expected round trip at 48&nbsp;kHz, by buffer size</caption>
+            <thead>
+              <tr><th scope="col">Stage</th><th scope="col">32 samples</th><th scope="col">64 samples</th><th scope="col">128 samples</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">ADC + USB input</th><td>~0.8–1.2&nbsp;ms</td><td>~0.8–1.2&nbsp;ms</td><td>~0.8–1.2&nbsp;ms</td></tr>
+              <tr><th scope="row">Core Audio input buffer</th><td>0.67&nbsp;ms</td><td>1.33&nbsp;ms</td><td>2.67&nbsp;ms</td></tr>
+              <tr><th scope="row">Engine, both channels <small>added latency / compute budget</small></th><td>0&nbsp;ms / &lt;&nbsp;0.4&nbsp;ms</td><td>0&nbsp;ms / &lt;&nbsp;0.9&nbsp;ms</td><td>0&nbsp;ms / &lt;&nbsp;1.9&nbsp;ms</td></tr>
+              <tr><th scope="row">Core Audio output buffer</th><td>0.67&nbsp;ms</td><td>1.33&nbsp;ms</td><td>2.67&nbsp;ms</td></tr>
+              <tr><th scope="row">USB output + DAC</th><td>~0.8–1.2&nbsp;ms</td><td>~0.8–1.2&nbsp;ms</td><td>~0.8–1.2&nbsp;ms</td></tr>
+            </tbody>
+            <tfoot>
+              <tr><th scope="row">Total expected</th><td>3.0–3.8&nbsp;ms</td><td>4.3–5.1&nbsp;ms</td><td>7.0–7.8&nbsp;ms</td></tr>
+            </tfoot>
+          </table>
+        </div>
+        <ul class="rules">
+          <li>32 samples is the default on the verified rig. If the setup stress test sees an overload, the app steps up to 64 and tells you.</li>
+          <li>128 samples is the hard limit. Above that, the app won't run live and names the cause instead.</li>
+          <li>Some devices add one more safety buffer in Core Audio. That's why the measured number, not this table, is what the app shows.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Verified rig -->
+    <section class="section" id="rig" aria-labelledby="rig-title">
+      <div class="wrap">
+        <h2 id="rig-title">The verified rig</h2>
+        <p class="sub-lede">One named configuration that V1 is tested against. Everything except the iPad is bus-powered, and the iPad charges through the hub. It fits a 1U drawer.</p>
+        <dl class="rig">
+          <div><dt>iPad</dt><dd>iPad Pro 11" or 13" with M4 or newer, iPadOS 26 or newer</dd></div>
+          <div><dt>Interface</dt><dd>Focusrite Scarlett 4i4 4th gen (primary) or 2i2 4th gen. MOTU M4 as an alternate</dd></div>
+          <div><dt>Hub</dt><dd>USB-C hub with ≥ 85&nbsp;W PD pass-through and a USB 3 data port. Avoid hubs with a built-in DAC</dd></div>
+          <div><dt>Power</dt><dd>100&nbsp;W USB-C PD brick, 1.5&nbsp;m cable</dd></div>
+          <div><dt>Cabling</dt><dd>Balanced throughout: TRS/XLR insert cables, plus a short loopback cable for latency measurement</dd></div>
+          <div><dt>Mount</dt><dd>1U drawer or iPad VESA rack shelf</dd></div>
+        </dl>
+        <div class="compat">
+          <h3>Also supported, not verified</h3>
+          <ul>
+            <li>iPad Air M2/M3 and iPad Pro M1/M2: a 64-sample minimum buffer and one channel until the device passes the in-app stress test.</li>
+            <li>Any USB Audio Class 2 interface with at least 2 in and 2 out. Interfaces that report no latency are flagged "latency unknown".</li>
+            <li>Yamaha DM3/DM7 and Behringer X32/M32 USB cards work as the interface directly.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Personas -->
+    <section class="section section-alt" id="who" aria-labelledby="who-title">
+      <div class="wrap">
+        <h2 id="who-title">Who it's for</h2>
+        <p class="sub-lede">One shared job: more vocal level out of the PA without ringing, with minimal setup and no rack computer.</p>
+        <div class="people">
+          <article class="person person-primary">
+            <h3>Volunteer church AV lead</h3>
+            <p class="ctx">150–800 seats, 2–4 vocal mics, a different operator each week. The person every design decision is checked against.</p>
+            <p><b>Needs</b> One tap to start and a green, amber or red strip readable from across the booth.</p>
+            <p><b>Won't tolerate</b> A settings screen mid-service, dropouts, or a license that breaks when the iPad is replaced.</p>
+          </article>
+          <article class="person">
+            <h3>Corporate AV tech</h3>
+            <p class="ctx">Ballrooms, lecterns, handheld Q&amp;A mics a metre or two from front fills.</p>
+            <p><b>Needs</b> Calibration under two minutes per channel, automatic recovery if a cable is pulled, and logs.</p>
+            <p><b>Won't tolerate</b> Audible artifacts on speech, or a UI that needs reading glasses in the dark.</p>
+          </article>
+          <article class="person">
+            <h3>Regional and touring FOH</h3>
+            <p class="ctx">Clubs and festivals, fast changeovers, a different PA every night.</p>
+            <p><b>Needs</b> Insert-level transparency, per-channel Strength, an instant and obvious bypass, show files per venue.</p>
+            <p><b>Won't tolerate</b> More latency than the console already adds, or a box with no visibility into what it's doing.</p>
+          </article>
+          <article class="person">
+            <h3>Rental and production house</h3>
+            <p class="ctx">Builds 1U drawer kits of iPad, hub, interface and PD brick, rented wet or dry.</p>
+            <p><b>Needs</b> Licensing that survives device swaps, a PIN lock for renters, and a diagnostics export.</p>
+            <p><b>Won't tolerate</b> Fingerprint licensing that strands a unit when a battery is replaced.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section class="section" id="compare" aria-labelledby="compare-title">
+      <div class="wrap">
+        <h2 id="compare-title">How it compares</h2>
+        <p class="sub-lede">Other products' figures are from their published material. RingOut's column is the V1 plan, not a shipped product.</p>
+        <div class="table-scroll" role="region" aria-labelledby="compare-title" tabindex="0">
+          <table class="data compare">
+            <thead>
+              <tr>
+                <th scope="col"><span class="sr-only">Attribute</span></th>
+                <th scope="col"><a href="https://harman.helpjuice.com/afs2/afs-how-it-works">dbx AFS2</a></th>
+                <th scope="col">Console notches <small>Yamaha, A&amp;H, Behringer</small></th>
+                <th scope="col"><a href="https://www.alphalabsaudio.com/defeedback/">Alpha Labs De-Feedback V1</a></th>
+                <th scope="col" class="us">RingOut V1 <small>planned</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Approach</th><td>24 notch filters per channel, down to 1/80 octave; fixed and live modes</td><td>8–12 dynamic notches</td><td>Trained neural model removes feedback, reverb and noise from a vocal</td><td class="us">Detector and temporary notches, plus a voice isolator (neural model planned)</td></tr>
+              <tr><th scope="row">Cost</th><td>~$400–485</td><td>Bundled with the console</td><td>$499 license + ~$624 NUC + Focusrite</td><td class="us">$199 proposed + an iPad and interface you may already own</td></tr>
+              <tr><th scope="row">Hardware</th><td>1U rack unit</td><td>On the console</td><td>Dedicated, BIOS-tuned PC; one instance per box</td><td class="us">M4 iPad + USB interface; two channels</td></tr>
+              <tr><th scope="row">Latency</th><td>Negligible</td><td>On-console</td><td>4.9&nbsp;ms at a 16-sample buffer on a tuned NUC</td><td class="us">Target ≤ 6&nbsp;ms round trip, zero added by the engine</td></tr>
+              <tr><th scope="row">Known limits</th><td>Reacts after the ring is audible; notches accumulate and colour the sound</td><td>Weakest detectors; no voice/feedback discrimination</td><td>Needs dedicated hardware; mic within ~6&nbsp;ft of the PA defeats it; vocals only</td><td class="us">Vocals and speech only; mic within 1&nbsp;m of the PA is an expected weak spot; unproven until lab-tested</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="section section-alt" id="pricing" aria-labelledby="pricing-title">
+      <div class="wrap">
+        <h2 id="pricing-title">Proposed pricing</h2>
+        <p class="sub-lede">Not on sale. This is the pricing being validated for an App Store release: one-time, no subscription, no activation server.</p>
+        <div class="tiers">
+          <div class="tier">
+            <h3>Trial</h3>
+            <p class="price">Free</p>
+            <p>Full engine on one channel, with a 2-second mute every 90&nbsp;seconds.</p>
+          </div>
+          <div class="tier tier-pro">
+            <h3>Pro</h3>
+            <p class="price">$199 <small>one-time, per Apple ID</small></p>
+            <p>Two channels, all presets, show files, lock, diagnostics export and V1.x updates.</p>
+          </div>
+          <div class="tier">
+            <h3>Pro + Rig</h3>
+            <p class="price">$199 <small>+ hardware from retailers</small></p>
+            <p>The verified hub, Scarlett, PD brick and loopback cable, bought from retailers through affiliate links.</p>
+          </div>
+          <div class="tier">
+            <h3>Fleet <small>V1.x</small></h3>
+            <p class="price">$149 <small>per seat, 5+</small></p>
+            <p>Volume purchase through Apple Business Manager for rental houses and multi-campus churches.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="wrap faq-wrap">
+        <h2 id="faq-title">Questions</h2>
+        <div class="faq">
+          <details>
+            <summary>Can I download it?</summary>
+            <p>Not yet. RingOut V1 is in development and there is no App Store or TestFlight build. Follow the GitHub repository for progress.</p>
+          </details>
+          <details>
+            <summary>Does it add latency?</summary>
+            <p>The engine is designed to add zero samples. What remains is Core Audio buffering and the interface's converters, targeted at 3.0–3.8&nbsp;ms round trip at a 32-sample buffer on the verified rig. The app shows the measured figure, not a computed one.</p>
+          </details>
+          <details>
+            <summary>Is the neural model in the current build?</summary>
+            <p>No. The current build has the algorithmic detector and adaptive notch bank, with a DSP stand-in where the isolator will go. The neural isolator is planned once training and on-device timing are proven.</p>
+          </details>
+          <details>
+            <summary>Which iPads will work?</summary>
+            <p>V1 is verified on iPad Pro with M4 or newer. iPad Air M2/M3 and iPad Pro M1/M2 are supported with a 64-sample minimum buffer and one channel until they pass the in-app stress test.</p>
+          </details>
+          <details>
+            <summary>Does it work on instruments or choirs?</summary>
+            <p>No. V1 is for vocals and speech only. Instrument and choir models are V2 candidates.</p>
+          </details>
+          <details>
+            <summary>What happens if the interface is unplugged mid-show?</summary>
+            <p>The design mutes output within one buffer, shows a full-screen "interface disconnected" state, and resumes automatically when the interface returns. If the audio callback stalls, a watchdog switches both channels to bit-exact bypass so the show continues unprocessed rather than going silent.</p>
+          </details>
+          <details>
+            <summary>Can it fix a badly placed mic?</summary>
+            <p>Only so far. If too many notches are active at once, the strip shows "loop gain too high": the system needs attention, not the app. A mic within a metre of a speaker is expected to be the hardest case.</p>
+          </details>
+          <details>
+            <summary>Will it run as a plug-in in AUM or Logic?</summary>
+            <p>Not in V1. V1 is a standalone app so the real-time path is fully under its control. An AUv3 version is planned for V1.x.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-row">
+      <p class="brand"><img src="assets/icon.svg" width="24" height="24" alt=""> <span>RingOut</span></p>
+      <p>Working name. V1 in development. Targets on this page are goals, not measured results.</p>
+      <p><a href="https://github.com/juandozuna/RingOut">github.com/juandozuna/RingOut</a></p>
+    </div>
+  </footer>
+</body>
+</html>
