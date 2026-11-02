@@ -7,14 +7,16 @@
 RingOut turns an M4-or-newer iPad plus a class-compliant USB audio interface into a feedback-suppression insert. It sits between a console insert send and return (or between a mic and the console) and adds no algorithmic latency.
 
 - Landing page: https://juandozuna.github.io/RingOut/
-- Status: **V1 in development.** The app, the engine and the setup flow run today. The neural voice isolator from the PRD is not trained yet, so a zero-latency DSP stand-in sits in its slot (see [Limitations](#limitations)).
+- Status: **V1 in development.** The app, the engine and the setup flow run today, including a neural feedback isolator trained locally on open data (VCTK speech, VocalSet singing) and simulated PA loops. It runs on the audio thread with zero added latency. All results so far are from simulated loops, not a real room (see [Limitations](#limitations)).
 
 ## What's in the repo
 
 | Path | What it is |
 | --- | --- |
-| `Sources/RingOutEngine/` | C++20 real-time engine behind a small C API (`include/ringout_engine.h`): DC block, 80 Hz HPF, 1024-pt FFT feedback detector with peak tracking and a logistic classifier, adaptive notch bank (8 auto + 4 fixed, Q≈60), isolator stage, equal-power Strength mix, −0.3 dBFS limiter, meters, spectrum, lock-free parameter/event queues. Also includes a simulated acoustic feedback loop (`ro_sim_*`) for demos and tests. |
-| `Tests/RingOutEngineTests/` | 34 engine tests (`swift test`): bit-exact bypass, zero latency, unity gain, detection speed, false-positive resistance on vibrato vocals, notch lifecycle and merging, synthetic closed-loop stability, performance. |
+| `Sources/RingOutEngine/` | C++20 real-time engine behind a small C API (`include/ringout_engine.h`): DC block, 80 Hz HPF, 1024-pt FFT feedback detector with peak tracking and a logistic classifier, adaptive notch bank (8 auto + 4 fixed, Q≈60), neural isolator (causal gated TCN, 18k parameters, weights compiled in from `NeuralWeights.inc`) with a DSP fallback, equal-power Strength mix, −0.3 dBFS limiter, meters, spectrum, lock-free parameter/event queues. Also includes a simulated acoustic feedback loop (`ro_sim_*`) for demos and tests. |
+| `Tests/RingOutEngineTests/` | 42 engine tests (`swift test`): bit-exact bypass, zero latency, unity gain, detection speed, false-positive resistance on vibrato vocals, notch lifecycle and merging, synthetic closed-loop stability, C++/PyTorch parity of the network, per-isolator gain margins for speech and singing, performance. |
+| `ml/` | Training pipeline for the neural isolator (PyTorch): data packing, room generation, closed-loop training, evaluation, export to C++. See [`ml/README.md`](ml/README.md). |
+| `research/` | Research notes with sources, e.g. what neural feedback suppression needs. |
 | `App/` | The iPadOS app (SwiftUI, Swift 6, iPadOS 26+). XcodeGen spec in `App/project.yml`; generated project committed as `App/RingOut.xcodeproj`. |
 | `App/RingOut/Audio/RenderGlue.c` | The only non-engine code on the Core Audio I/O thread: RemoteIO in → engine → out, written in C (no Swift, no allocation, no locks), plus Out 2 → In 2 loopback latency measurement. |
 | `docs/` | GitHub Pages landing page. |
@@ -51,7 +53,10 @@ With no interface plugged in (or in the iOS Simulator), turn on **Use simulated 
 | Level at default Strength | within ±0.15 dB of bypass on clean speech | 3 synthetic-talker seeds |
 | Time to notch a growing ring | 32–35 ms after it crosses −60 dBFS | Pure growing tone, buffers 32–256 |
 | False notches on clean speech / vibrato singing (Singing preset) | 0 | Synthetic talker and singer |
-| Added stable gain over bypass | median 9.5 dB, minimum 6 dB (seeds 1–6); mean 9.2 dB over 16 seeds | Simulated room with resonant modes and loop delay, Strength 0.8 |
+| Added stable gain over bypass, speech | **Neural (default): median 11.5 dB, min 10 dB**; DSP only: median 9.5, min 6 | Simulated room with resonant modes and loop delay, Strength 0.8, seeds 1–6, test capped at 12 dB |
+| Added stable gain over bypass, singing | **Neural: median 11.5 dB, min 8 dB**; DSP only: median 0, min 0 | Same, synthetic singer (held vibrato notes, which the detector deliberately leaves alone) |
+| Neural transparency, no feedback | SI-SDR 41 dB on speech, 43 dB on singing, 0.0 dB median level change | 24 × 4 s held-out VCTK / VocalSet clips |
+| Neural compute | ~19 µs per 32-sample block per channel (≈3 % of the budget) | Apple-silicon Mac (M4 Max), release build |
 | CPU | ~0.6 % of a 32-sample / 48 kHz buffer for 2 channels | Apple-silicon Mac, release build |
 | UI flow | First run → simulated rig → 5-step wizard → Live → bypass → settings | XCUITest on the iPad Pro 13" simulator (`RingOutUITests`) |
 
@@ -80,7 +85,7 @@ iPad Pro 11"/13" with M4 or newer · USB-C hub with ≥ 85 W PD pass-through · 
 
 ## Limitations
 
-- **Neural isolator.** The PRD's causal TCN running on BNNSGraph needs a trained model, which needs the data pipeline. The engine has the isolator seam, and a causal zero-latency DSP stand-in runs there now. The detector and notch bank are complete.
+- **Neural isolator.** Trained on simulated PA loops only (no real-room recordings yet), 48 kHz only (other rates fall back to DSP), and it runs as hand-written C++ rather than the PRD's BNNSGraph. A pure, perfectly steady sine tone is turned down about 6 dB once it lasts ~50 ms, because it looks exactly like a ring; pick **DSP only** in Settings → Audio for sine-wave line checks. On its own, without the notch bank, it adds ~0 dB on held-out rooms; its gains come from working behind the notches. Not yet timed on an actual M4 iPad. Details in [`ml/README.md`](ml/README.md).
 - **iPadOS limits.** iPadOS does not expose USB vendor/product IDs or negotiated USB speed, so interfaces are identified by port name and UID. Accessibility audio features can't be read directly; RingOut infers them from a buffer mismatch.
 - **Live Activity** ("Live — N channels active" on the lock screen) is built as a WidgetKit extension but has not been seen on a real lock screen yet.
 - **Not implemented yet:** iCloud sync (needs an iCloud-enabled signing team; the toggle stays disabled until then), AUv3, stereo link (V1.x per the PRD).

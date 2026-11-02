@@ -25,6 +25,8 @@ final class AppModel {
 
     // Subsystems
     let engine = Engine()
+    /// The compiled-in network reproduces its PyTorch reference output.
+    let neuralModelVerified = Engine.neuralSelfTestError < 1e-3
     let audio = AudioHost()
     let device = DeviceMonitor()
     let store = ShowStore()
@@ -208,6 +210,8 @@ final class AppModel {
             engine.set(RO_PARAM_BYPASS, bypassed[ch] || watchdogTripped, channel: ch)
             engine.set(RO_PARAM_MUTE, muted[ch], channel: ch)
             engine.set(RO_PARAM_RING_OUT_MODE, false, channel: ch)
+            let mode = neuralModelVerified ? show.isolator : .dsp
+            engine.setIsolator(ro_isolator(rawValue: UInt32(mode.rawValue)), channel: ch)
             for slot in Int(RO_MAX_AUTO_NOTCHES)..<Int(RO_MAX_NOTCHES) {
                 engine.command(RO_CMD_RELEASE_NOTCH, channel: ch, Float(slot))
             }

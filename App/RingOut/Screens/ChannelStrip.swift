@@ -88,7 +88,7 @@ struct ChannelStrip: View {
                         }
                     }
                     if snap.isolatorActivity > 0.05 {
-                        Label("Isolator \(Int(snap.isolatorActivity * 100))%", systemImage: "waveform.path.ecg")
+                        Label("\(snap.isolator == RO_ISOLATOR_DSP ? "Isolator" : "Neural") \(Int(snap.isolatorActivity * 100))%", systemImage: snap.isolator == RO_ISOLATOR_DSP ? "waveform.path.ecg" : "brain")
                             .font(Tokens.Font.label(13))
                             .foregroundStyle(Tokens.Color.textSecondary)
                     }

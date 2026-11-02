@@ -32,6 +32,19 @@ enum Topology: String, Codable, CaseIterable, Identifiable, Sendable {
     }
 }
 
+/// Which stage removes the feedback the notches miss. Mirrors ro_isolator.
+enum IsolatorMode: Int, Codable, CaseIterable, Identifiable, Sendable {
+    case dsp = 0, neural = 1, neuralDSP = 2
+    var id: Int { rawValue }
+    var title: String {
+        switch self {
+        case .dsp: "DSP only"
+        case .neural: "Neural"
+        case .neuralDSP: "Neural + DSP"
+        }
+    }
+}
+
 enum Preset: Int, Codable, CaseIterable, Identifiable, Sendable {
     case speech = 0, singing = 1, custom = 2
     var id: Int { rawValue }
@@ -112,6 +125,10 @@ struct ShowFile: Codable, Identifiable, Hashable, Sendable {
     var thermalPolicy: ThermalPolicy = .autoStepUp
     var batteryWarnHours: Double = 2
     var dimBooth = false
+    /// Optional so show files saved before the neural isolator still decode.
+    var isolatorMode: IsolatorMode?
+
+    var isolator: IsolatorMode { isolatorMode ?? .neural }
 
     static func makeDefault() -> ShowFile { ShowFile(name: "Untitled show") }
 

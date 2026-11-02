@@ -113,7 +113,7 @@
             </div>
             <div class="pair-item pair-suspension">
               <h3>Voice isolator</h3>
-              <p>Separates the voice from feedback, room and noise energy the notches left behind, using the detector's findings as a hint.</p>
+              <p>A small neural network that runs on the iPad's CPU inside the audio callback and removes the feedback the notches missed, sample by sample, with no added delay.</p>
             </div>
           </div>
         </div>
@@ -123,13 +123,13 @@
           <li><b>Input conditioning</b><span>DC block, 80&nbsp;Hz high-pass, metering</span></li>
           <li><b>Feedback detector</b><span>Up to 8 candidate frequencies with a confidence score, every buffer</span></li>
           <li><b>Adaptive notch bank</b><span>Up to 8 notches, −6 to −18&nbsp;dB, released after the ring decays</span></li>
-          <li><b>Voice isolator</b><span>Processes the notched signal, guided by the detector</span></li>
+          <li><b>Neural isolator</b><span>Causal network, 18k parameters, 43&nbsp;ms of context, zero added latency</span></li>
           <li><b>Strength mix</b><span>Equal-power blend with the dry input. 0&nbsp;% is a bit-exact bypass</span></li>
           <li><b>Output limiter</b><span>−0.3&nbsp;dBFS, metering, bypass logic</span></li>
         </ol>
 
         <aside class="note" aria-label="Current build status">
-          <p><b>What the current build ships.</b> The algorithmic detector and adaptive notch bank are being built now. The neural isolator is planned; until it is trained, a DSP stand-in fills its slot so the chain, metering and Strength control can be tested end to end.</p>
+          <p><b>What the current build ships.</b> The full chain runs today, including a first neural isolator trained on open speech and singing data (VCTK, VocalSet) inside simulated PA loops. In the simulated room it adds a median 11.5&nbsp;dB of stable gain over bypass on speech and on singing, versus 9.5&nbsp;dB (speech) and 0&nbsp;dB (singing) for the DSP-only chain. These are simulator numbers; it has not been measured in a real room yet.</p>
         </aside>
 
         <h3 class="sub" id="topologies">Where it goes in your signal path</h3>
@@ -378,7 +378,7 @@
           </details>
           <details>
             <summary>Is the neural model in the current build?</summary>
-            <p>No. The current build has the algorithmic detector and adaptive notch bank, with a DSP stand-in where the isolator will go. The neural isolator is planned once training and on-device timing are proven.</p>
+            <p>Yes, a first version. It was trained locally on CC&nbsp;BY 4.0 speech and singing recordings fed through simulated PA feedback loops, and runs on the CPU in about 3&nbsp;% of a 32-sample buffer on Apple silicon. It has only been validated in simulation so far. Settings → Audio lets you switch to the DSP-only isolator.</p>
           </details>
           <details>
             <summary>Which iPads will work?</summary>

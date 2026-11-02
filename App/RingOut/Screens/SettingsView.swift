@@ -76,6 +76,19 @@ private struct AudioSettings: View {
             }
         }
         Section {
+            Picker("Isolator", selection: Binding(get: { app.show.isolator }, set: { v in app.update { $0.isolatorMode = v } })) {
+                ForEach(IsolatorMode.allCases) { Text($0.title).tag($0) }
+            }
+            .pickerStyle(.segmented)
+            .disabled(!app.neuralModelVerified)
+        } header: {
+            Text("Feedback isolator")
+        } footer: {
+            Text(app.neuralModelVerified
+                 ? "Neural runs a small on-device network, trained on speech and singing through simulated PA loops, that removes feedback the notches miss. Voice passes essentially unchanged; a pure steady sine tone is turned down about 6 dB, so use DSP only for sine-wave line checks. Needs 48 kHz; other rates fall back to DSP."
+                 : "The neural model failed its self-test, so the DSP isolator is in use.")
+        }
+        Section {
             LabeledContent("Sample rate", value: "\(Int(app.audio.sampleRate)) Hz (follows interface)")
             Toggle("High-pass 80 Hz", isOn: Binding(get: { app.show.channels[0].highPass }, set: { v in app.update { $0.channels[0].highPass = v; $0.channels[1].highPass = v } }))
             Toggle("Output limiter (−0.3 dBFS)", isOn: Binding(get: { app.show.limiter }, set: { v in app.update { $0.limiter = v } }))
@@ -262,10 +275,15 @@ private struct LicenseSettings: View {
 private struct AboutSettings: View {
     @Environment(AppModel.self) private var app
     var body: some View {
-        Section("RingOut") {
+        Section {
             LabeledContent("Version", value: "\(Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?") (\(Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"))")
             LabeledContent("Detector", value: "FFT 1024 · 8 auto + 4 fixed notches")
-            LabeledContent("Isolator", value: "DSP stand-in (neural model pending)")
+            LabeledContent("Isolator", value: app.show.isolator.title)
+            LabeledContent("Neural model", value: "\(Engine.neuralModelId)\(app.neuralModelVerified ? "" : " (self-test failed)")")
+        } header: {
+            Text("RingOut")
+        } footer: {
+            Text("The neural model was trained with the CSTR VCTK Corpus (Yamagishi, Veaux, MacDonald, University of Edinburgh) and VocalSet (Wilkins, Seetharaman, Wahl, Pardo), both CC BY 4.0.")
         }
         Section {
             Button("Open diagnostics") { app.showSettings = false; DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) { app.showDiagnostics = true } }

@@ -46,6 +46,18 @@ final class Engine {
         set(param, value ? 1 : 0, channel: channel)
     }
 
+    /// RO_PARAM_ISOLATOR. Neural modes fall back to DSP when the model can't
+    /// run (sample rate != 48 kHz); `ChannelSnapshot.isolator` reports which runs.
+    func setIsolator(_ mode: ro_isolator, channel: Int) {
+        set(RO_PARAM_ISOLATOR, Float(mode.rawValue), channel: channel)
+    }
+
+    /// Identifier of the compiled-in neural weights.
+    static var neuralModelId: String { String(cString: ro_neural_model_id()) }
+
+    /// Max abs error of the C++ network against the PyTorch parity vector.
+    static var neuralSelfTestError: Float { ro_neural_selftest() }
+
     func command(_ cmd: ro_command, channel: Int, _ a: Float = 0, _ b: Float = 0) {
         ro_engine_command(raw, Int32(channel), cmd, a, b)
     }
@@ -106,6 +118,7 @@ struct ChannelSnapshot: Sendable {
     var gainReduction: Float = 0
     var loopGainWarning = false
     var multiTalker = false
+    var isolator: ro_isolator = RO_ISOLATOR_DSP
 
     init() {}
 
@@ -127,5 +140,6 @@ struct ChannelSnapshot: Sendable {
         lastRingHz = s.last_ring_hz; lastRingAge = s.last_ring_age_s
         isolatorActivity = s.isolator_activity; gainReduction = s.gain_reduction_db
         loopGainWarning = s.loop_gain_warning; multiTalker = s.multi_talker
+        isolator = s.isolator
     }
 }
