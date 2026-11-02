@@ -18,7 +18,7 @@ public:
     static constexpr int kAuto = RO_MAX_AUTO_NOTCHES;
     static constexpr int kFixed = RO_MAX_FIXED_NOTCHES;
     static constexpr int kSlots = RO_MAX_NOTCHES;
-    static constexpr double kQ = 60.0;
+    static constexpr double kQ = 60.0;  // initial notch Q (auto notches widen to Q 30)
     static constexpr float kInitialDepth = -6.0f;
     static constexpr float kDeepenStep = 3.0f;
     static constexpr float kMaxDepth = -18.0f;
@@ -58,15 +58,20 @@ private:
         float freq = 1000.0f;
         float depth = 0.0f;        // current target depth (dB)
         float holdDepth = 0.0f;    // depth before a release ramp started
-        float appliedFreq = 0.0f, appliedDepth = 0.0f;
+        float q = static_cast<float>(kQ);  // auto notches widen when the ring sits on their skirt
+        float appliedFreq = 0.0f, appliedDepth = 0.0f, appliedQ = 0.0f;
         double created = 0, lastDeepen = 0, quietSince = -1, releaseStart = 0, drainUntil = 0;
+        double pressureSince = -1;  // fixed: a ring has been growing through it since
         float maxLevel = -120.0f, levelAtDeepen = -120.0f;
         SmoothBiquad filt;
     };
 
-    int findNear(float f, float tolHz) const;
+    int findNear(float f) const;      // nearest notch within the merge window
+    int fixedBandAt(float f) const;   // fixed notch whose band contains f
+    bool remembered(float f, double now) const;  // a notch was released near f recently
+    void coalesce();
     int freeSlot(bool fixed) const;
-    void place(int slot, float freq, float depth, bool fixed, double now);
+    void place(int slot, float freq, float depth, bool fixed, double now, float q = static_cast<float>(kQ));
     void deepen(Slot& s, float level, double now, float conf, const EventSink& ev);
     bool pinToFixed(int autoSlot, double now, const EventSink& ev);
     void noteRing(float f, double now);
@@ -82,6 +87,7 @@ private:
     struct Memory {
         float freq = 0, depth = 0;
         double time = -1e9;
+        float q = static_cast<float>(kQ);
     };
     static constexpr int kMemory = 8;
     Memory memory_[kMemory];
