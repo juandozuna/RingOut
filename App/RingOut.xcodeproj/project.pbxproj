@@ -12,30 +12,37 @@
 		1C002BF1133C566A731C2908 /* ShowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ED360CB6DFA468F3A2B097 /* ShowStore.swift */; };
 		1F8D16F43F6DD0C68268F544 /* RingOutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7802F6137A48CB6425460ABB /* RingOutUITests.swift */; };
 		2030AD9922B530F384709182 /* ChannelStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2A98C5F40943DEF97BEC4B /* ChannelStrip.swift */; };
+		272AC823DEC41C342F6E3866 /* RingOutWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 67C52515A3228E3855CAA316 /* RingOutWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2AA731D6DC35D89CC00C68C4 /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEEAEBB11A60F4816C81240 /* DiagnosticsView.swift */; };
 		36A54CC4CAE77C406A662BF3 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68261AE360165B85D33E11A0 /* AppModel.swift */; };
 		3FCE15A1404B060929FACE65 /* EventLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACF038BC0B5E82AC83325FC /* EventLog.swift */; };
 		411A3D0ACDC7FE7C40307511 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B6390FE9E0A7A4692DF3F3 /* Engine.swift */; };
 		53AB14CF6F54B022792873B8 /* Calibrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807FCDD6BF866313CC2F139 /* Calibrator.swift */; };
 		56D645C0C0980802F2496583 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E949B8BABAE090A973CC18E /* Tokens.swift */; };
+		581B86255004EAC7EA46D2EA /* LiveSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9AA9B1C990FD985F8EB011 /* LiveSessionAttributes.swift */; };
 		5B19B64FAD6C5B37FD9107FB /* RingOutEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C5DF7CB57F8227018906D9B6 /* RingOutEngine */; };
 		5C79A4F5C26BC1D2A412E5E3 /* RingOutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA09FCE76F8422B4075578A /* RingOutApp.swift */; };
 		65E3E7721684BB164186FE6A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD5E79483B6AB539C072FA /* RootView.swift */; };
 		663029B4AE8F63E51EF40E0F /* StrengthDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09F3AB2183F3F5232DC11D /* StrengthDial.swift */; };
 		68892E3D0A2C4E048B4C0D8D /* SetupRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11A8EBA4DBD7F53169F83E7 /* SetupRing.swift */; };
 		69C7E663F0E3A3D974FE2266 /* LevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8C6950E491246FC004AFC0 /* LevelMeter.swift */; };
+		756C5E620ECFE6FB3B3FF2B0 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CA545708E86FE8437874AD /* WidgetKit.framework */; };
 		7F085FD48C0EEC6D03A011B8 /* SetupWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D6525CDD097DACC5BA08C /* SetupWizardView.swift */; };
 		8168A1FD35BBDBA253537A37 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48992C33B8C3C93AEC85216 /* License.swift */; };
 		8238D26AED96B0DE59A30DA5 /* StatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0DDC2549C13537F6C0381A /* StatusBanner.swift */; };
+		92C0D26049F082BEEB6E92B8 /* LiveSessionAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9AA9B1C990FD985F8EB011 /* LiveSessionAttributes.swift */; };
 		A8480843C9748429F0161348 /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BBF95BD552C3E0BEB7494 /* AVFAudio.framework */; };
 		A8A3CE4F6C655E40D8BD3155 /* AudioHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A65A4262ECA8EF9B0437F /* AudioHost.swift */; };
+		AA78715D2408091E887BA45F /* LiveActivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2ABBC118C7504DAFCCB774F /* LiveActivityController.swift */; };
 		AFF279990CD8C3CB5F91542D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 729BA5AB50DCA115E5C525C3 /* AudioToolbox.framework */; };
 		C361CC4BD5F71E74A54919EA /* DeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABEF701B3D7CBAC4D42EE16 /* DeviceMonitor.swift */; };
+		C58FCDE83EB45CB79CD3B714 /* RingOutWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579C6AD18E60132F9FD86B94 /* RingOutWidgetBundle.swift */; };
 		C7D9D08A5BFDB6D167D709D3 /* NotchDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7612664C100C84D27E15B282 /* NotchDetailSheet.swift */; };
 		C7FB11788094F52EAB0BFDC7 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9C070B66FA7283FF11444 /* LiveView.swift */; };
 		CCF5DAFD15F568F3EA3B93DF /* RenderGlue.c in Sources */ = {isa = PBXBuildFile; fileRef = DB9F211F575AA869DCF3F8A9 /* RenderGlue.c */; };
 		CCF7B21854586547E5EC4ED1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC86D4B05377C1A841A5BE9F /* SettingsView.swift */; };
 		CE8D73C80578CB5F019EBB79 /* SpectrumRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F99CAF1A256F1D778AE27 /* SpectrumRibbon.swift */; };
+		DEEF643373EA454B94CCCBDC /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C718F65DABB95EC97DEACFD /* SwiftUI.framework */; };
 		E69E2CF327666DC1483BEFA0 /* BigButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC5EF8805D2C7E94314300 /* BigButton.swift */; };
 		EA626E1A3BFE1ECC64877EA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8447BE94D3DBDB09B3004BCD /* Assets.xcassets */; };
 		EB798CACA8DC59FB34A7182E /* ShowFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BE02211F499CFF4741145E /* ShowFile.swift */; };
@@ -51,13 +58,35 @@
 			remoteGlobalIDString = 71F02ACC63855B48FDD737F6;
 			remoteInfo = RingOut;
 		};
+		C153B218DDA27F43A17CA8C7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1918D33CE408AC76396C6253 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6FF9589261F843E35D41A241;
+			remoteInfo = RingOutWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2154C26BDEC20E88153428A3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				272AC823DEC41C342F6E3866 /* RingOutWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		02BE02211F499CFF4741145E /* ShowFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFile.swift; sourceTree = "<group>"; };
 		0E0DDC2549C13537F6C0381A /* StatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBanner.swift; sourceTree = "<group>"; };
 		0E949B8BABAE090A973CC18E /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
 		0EFBF004E12D9E90086C1587 /* RingOutUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RingOutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C718F65DABB95EC97DEACFD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		21ED360CB6DFA468F3A2B097 /* ShowStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStore.swift; sourceTree = "<group>"; };
 		2BA09FCE76F8422B4075578A /* RingOutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingOutApp.swift; sourceTree = "<group>"; };
 		2C7F99CAF1A256F1D778AE27 /* SpectrumRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrumRibbon.swift; sourceTree = "<group>"; };
@@ -69,6 +98,8 @@
 		4FBB7F8F3ACCAB2CF9BEC5AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		530BBF95BD552C3E0BEB7494 /* AVFAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFAudio.framework; path = System/Library/Frameworks/AVFAudio.framework; sourceTree = SDKROOT; };
 		538EEBE040770C74DAB9D768 /* RenderGlue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderGlue.h; sourceTree = "<group>"; };
+		579C6AD18E60132F9FD86B94 /* RingOutWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingOutWidgetBundle.swift; sourceTree = "<group>"; };
+		67C52515A3228E3855CAA316 /* RingOutWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = RingOutWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		68261AE360165B85D33E11A0 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		6ABEF701B3D7CBAC4D42EE16 /* DeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMonitor.swift; sourceTree = "<group>"; };
 		6B8C6950E491246FC004AFC0 /* LevelMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeter.swift; sourceTree = "<group>"; };
@@ -78,9 +109,12 @@
 		7807FCDD6BF866313CC2F139 /* Calibrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibrator.swift; sourceTree = "<group>"; };
 		78BC5EF8805D2C7E94314300 /* BigButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButton.swift; sourceTree = "<group>"; };
 		7A09F3AB2183F3F5232DC11D /* StrengthDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthDial.swift; sourceTree = "<group>"; };
+		7F9AA9B1C990FD985F8EB011 /* LiveSessionAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveSessionAttributes.swift; sourceTree = "<group>"; };
 		807A7CD765467EAE6A16E537 /* RingOut.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RingOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8447BE94D3DBDB09B3004BCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88DB1A33B69F9B3C06AC921B /* RingOut-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RingOut-Bridging-Header.h"; sourceTree = "<group>"; };
+		A0CA545708E86FE8437874AD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		A2ABBC118C7504DAFCCB774F /* LiveActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityController.swift; sourceTree = "<group>"; };
 		AACF038BC0B5E82AC83325FC /* EventLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLog.swift; sourceTree = "<group>"; };
 		BA2A98C5F40943DEF97BEC4B /* ChannelStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelStrip.swift; sourceTree = "<group>"; };
 		BBEEAEBB11A60F4816C81240 /* DiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsView.swift; sourceTree = "<group>"; };
@@ -92,10 +126,20 @@
 		DB9F211F575AA869DCF3F8A9 /* RenderGlue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RenderGlue.c; sourceTree = "<group>"; };
 		DC86D4B05377C1A841A5BE9F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E11A8EBA4DBD7F53169F83E7 /* SetupRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupRing.swift; sourceTree = "<group>"; };
+		EB85DA5067DDEC44B9AF9CB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F0B6390FE9E0A7A4692DF3F3 /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		22E6DB187E5B84A61E66EC76 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				756C5E620ECFE6FB3B3FF2B0 /* WidgetKit.framework in Frameworks */,
+				DEEF643373EA454B94CCCBDC /* SwiftUI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		88DE0ABA19647E086FC00066 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -144,6 +188,8 @@
 				A86CEE2912AD86AE819E5F05 /* Packages */,
 				744F26CA20EF8C98ADB4AFAD /* RingOut */,
 				06794FAFA8A23840B79DEB51 /* RingOutUITests */,
+				FD3276069005863E36656247 /* RingOutWidget */,
+				B6CC4ADE6D0E9294C7EA15A7 /* Shared */,
 				47D90B5F65C800A7C91FA006 /* Frameworks */,
 				ECEBBCE13330A2408BB71167 /* Products */,
 			);
@@ -154,6 +200,8 @@
 			children = (
 				729BA5AB50DCA115E5C525C3 /* AudioToolbox.framework */,
 				530BBF95BD552C3E0BEB7494 /* AVFAudio.framework */,
+				1C718F65DABB95EC97DEACFD /* SwiftUI.framework */,
+				A0CA545708E86FE8437874AD /* WidgetKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -203,6 +251,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B6CC4ADE6D0E9294C7EA15A7 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				7F9AA9B1C990FD985F8EB011 /* LiveSessionAttributes.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		BA1B2ED606D2229ACA0AFDDF /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +293,7 @@
 			isa = PBXGroup;
 			children = (
 				6ABEF701B3D7CBAC4D42EE16 /* DeviceMonitor.swift */,
+				A2ABBC118C7504DAFCCB774F /* LiveActivityController.swift */,
 			);
 			path = System;
 			sourceTree = "<group>";
@@ -246,8 +303,18 @@
 			children = (
 				807A7CD765467EAE6A16E537 /* RingOut.app */,
 				0EFBF004E12D9E90086C1587 /* RingOutUITests.xctest */,
+				67C52515A3228E3855CAA316 /* RingOutWidget.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		FD3276069005863E36656247 /* RingOutWidget */ = {
+			isa = PBXGroup;
+			children = (
+				EB85DA5067DDEC44B9AF9CB6 /* Info.plist */,
+				579C6AD18E60132F9FD86B94 /* RingOutWidgetBundle.swift */,
+			);
+			path = RingOutWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -271,6 +338,24 @@
 			productReference = 0EFBF004E12D9E90086C1587 /* RingOutUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		6FF9589261F843E35D41A241 /* RingOutWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC2B1D473A612210E56CB718 /* Build configuration list for PBXNativeTarget "RingOutWidget" */;
+			buildPhases = (
+				C0A9B4B0F692D9D4F34FD206 /* Sources */,
+				22E6DB187E5B84A61E66EC76 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RingOutWidget;
+			packageProductDependencies = (
+			);
+			productName = RingOutWidget;
+			productReference = 67C52515A3228E3855CAA316 /* RingOutWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		71F02ACC63855B48FDD737F6 /* RingOut */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = AFAFF60C770E3417435F4DB5 /* Build configuration list for PBXNativeTarget "RingOut" */;
@@ -278,10 +363,12 @@
 				3BE7DD69E0F9FDCD097CC297 /* Sources */,
 				CEBEB1254E7BC1AF3FF99658 /* Resources */,
 				88DE0ABA19647E086FC00066 /* Frameworks */,
+				2154C26BDEC20E88153428A3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				ED4319D140DB5F083DC5A8E4 /* PBXTargetDependency */,
 			);
 			name = RingOut;
 			packageProductDependencies = (
@@ -304,6 +391,10 @@
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 						TestTargetID = 71F02ACC63855B48FDD737F6;
+					};
+					6FF9589261F843E35D41A241 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
 					};
 					71F02ACC63855B48FDD737F6 = {
 						DevelopmentTeam = "";
@@ -329,6 +420,7 @@
 			projectRoot = "";
 			targets = (
 				71F02ACC63855B48FDD737F6 /* RingOut */,
+				6FF9589261F843E35D41A241 /* RingOutWidget */,
 				2C65D9202383E8136870949B /* RingOutUITests */,
 			);
 		};
@@ -370,6 +462,8 @@
 				3FCE15A1404B060929FACE65 /* EventLog.swift in Sources */,
 				69C7E663F0E3A3D974FE2266 /* LevelMeter.swift in Sources */,
 				8168A1FD35BBDBA253537A37 /* License.swift in Sources */,
+				AA78715D2408091E887BA45F /* LiveActivityController.swift in Sources */,
+				92C0D26049F082BEEB6E92B8 /* LiveSessionAttributes.swift in Sources */,
 				C7FB11788094F52EAB0BFDC7 /* LiveView.swift in Sources */,
 				FA16E4A7BC63CCB71B9016C4 /* LockManager.swift in Sources */,
 				C7D9D08A5BFDB6D167D709D3 /* NotchDetailSheet.swift in Sources */,
@@ -390,6 +484,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C0A9B4B0F692D9D4F34FD206 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				581B86255004EAC7EA46D2EA /* LiveSessionAttributes.swift in Sources */,
+				C58FCDE83EB45CB79CD3B714 /* RingOutWidgetBundle.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -397,6 +500,11 @@
 			isa = PBXTargetDependency;
 			target = 71F02ACC63855B48FDD737F6 /* RingOut */;
 			targetProxy = B69C41EE162E41FF67BE7EE2 /* PBXContainerItemProxy */;
+		};
+		ED4319D140DB5F083DC5A8E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6FF9589261F843E35D41A241 /* RingOutWidget */;
+			targetProxy = C153B218DDA27F43A17CA8C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -480,6 +588,23 @@
 				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
+		};
+		55F83B7374C89929FC1C2C56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = RingOutWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.9.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juandozuna.ringout.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
 		};
 		5C8FFF52254F7C78ED1E32F8 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -608,6 +733,23 @@
 			};
 			name = Debug;
 		};
+		B2F58F36057029AEFED83866 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_FILE = RingOutWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 0.9.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juandozuna.ringout.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -625,6 +767,15 @@
 			buildConfigurations = (
 				3FB068D7ACAE029A9BC6FCEE /* Debug */,
 				4B1FF890F04D540C4C3C475B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CC2B1D473A612210E56CB718 /* Build configuration list for PBXNativeTarget "RingOutWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55F83B7374C89929FC1C2C56 /* Debug */,
+				B2F58F36057029AEFED83866 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

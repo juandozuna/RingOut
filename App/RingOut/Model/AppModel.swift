@@ -63,6 +63,7 @@ final class AppModel {
     var simSource: [ro_sim_source] = [RO_SIM_SPEECH, RO_SIM_SPEECH]
     var monitorAudible = false { didSet { audio.setMonitorAudible(monitorAudible) } }
 
+    private let liveActivity = LiveActivityController()
     private var timer: Timer?
     private var lastCallbacks: UInt64 = 0
     private var watchdogMisses = 0
@@ -565,9 +566,22 @@ final class AppModel {
         log.addHealth(HealthSample(date: Date(), dspLoad: dspLoad, overloads: overloads, thermal: t.rawValue,
                                    bufferFrames: audio.actualFrames, battery: device.batteryLevel ?? -1))
         syncFixedNotches()
+        updateLiveActivity()
         if show.autoLockMinutes > 0, hasPIN, !locked, Date().timeIntervalSince(lastInteraction) > Double(show.autoLockMinutes) * 60 {
             lock()
         }
+    }
+
+    private func updateLiveActivity() {
+        let n = effectiveChannels
+        let states = (0..<n).map { ch -> Int in
+            if bypassed[ch] || muted[ch] || watchdogTripped { return 3 }
+            return snapshots[ch].state.rawValue
+        }
+        let worst = states.contains(2) ? 2 : states.contains(1) ? 1 : (states.allSatisfy { $0 == 3 } ? 3 : 0)
+        let notches = (0..<n).reduce(0) { $0 + snapshots[$1].autoNotches + snapshots[$1].fixedNotches }
+        liveActivity.update(running: phase == .live && audio.isRunning, show: show.name, interface: audio.interfaceName,
+                            state: .init(channels: n, state: worst, latencyMS: (latencyMS * 10).rounded() / 10, activeNotches: notches))
     }
 
     /// Fixed notches pinned in the engine (ring-out, pin) are mirrored into the show file.

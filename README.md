@@ -82,7 +82,8 @@ iPad Pro 11"/13" with M4 or newer · USB-C hub with ≥ 85 W PD pass-through · 
 
 - **Neural isolator.** The PRD's causal TCN running on BNNSGraph needs a trained model, which needs the data pipeline. The engine has the isolator seam, and a causal zero-latency DSP stand-in runs there now. The detector and notch bank are complete.
 - **iPadOS limits.** iPadOS does not expose USB vendor/product IDs or negotiated USB speed, so interfaces are identified by port name and UID. Accessibility audio features can't be read directly; RingOut infers them from a buffer mismatch.
-- **Not implemented yet:** Live Activity, iCloud sync (needs an iCloud-enabled signing team; the toggle stays disabled until then), AUv3, stereo link (V1.x per the PRD).
+- **Live Activity** ("Live — N channels active" on the lock screen) is built as a WidgetKit extension but has not been seen on a real lock screen yet.
+- **Not implemented yet:** iCloud sync (needs an iCloud-enabled signing team; the toggle stays disabled until then), AUv3, stereo link (V1.x per the PRD).
 - In the simulated loop, two rings at once clipped by the input stage can produce intermodulation combs that the detector reads as voice (2 of 24 random seeds still howl at +6 dB). The demo picks a random room each launch, so an occasional room can beat it at high gain.
 - Auto notches can widen from Q 60 to Q 30 when a ring keeps drifting on a notch's skirt (a deliberate departure from the PRD that holds more margin).
 - The V1 success metrics (≥ 6 dB added gain before feedback, ≤ 6 ms round trip, 4-hour thermal run) are targets. They have to be verified on the physical lab rig described in the PRD.

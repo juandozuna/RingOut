@@ -13,6 +13,7 @@
 	<key>CFBundleVersion</key><string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSRequiresIPhoneOS</key><true/>
 	<key>NSMicrophoneUsageDescription</key><string>RingOut processes the audio from your interface inputs in real time to suppress feedback. Audio never leaves the iPad.</string>
+	<key>NSSupportsLiveActivities</key><true/>
 	<key>UIBackgroundModes</key><array><string>audio</string></array>
 	<key>UIFileSharingEnabled</key><true/>
 	<key>LSSupportsOpeningDocumentsInPlace</key><true/>
