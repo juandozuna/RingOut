@@ -78,9 +78,12 @@ struct NotchDetailSheet: View {
     private var notchTable: some View {
         VStack(spacing: 0) {
             HStack {
-                ForEach(["#", "Frequency", "Depth", "Age", "Type", ""], id: \.self) { h in
-                    Text(h).frame(maxWidth: .infinity, alignment: .leading)
-                }
+                Text("#").frame(width: 40, alignment: .leading)
+                Text("Frequency").frame(maxWidth: .infinity, alignment: .leading)
+                Text("Depth").frame(maxWidth: .infinity, alignment: .leading)
+                Text("Age").frame(maxWidth: .infinity, alignment: .leading)
+                Text("Type").frame(maxWidth: .infinity, alignment: .leading)
+                Text("").frame(width: 220)
             }
             .font(Tokens.Font.label(13, weight: .bold))
             .foregroundStyle(Tokens.Color.textSecondary)
@@ -93,8 +96,8 @@ struct NotchDetailSheet: View {
             ForEach(snap.notches) { n in
                 Divider().overlay(Tokens.Color.hairline)
                 HStack {
-                    Text("\(n.slot + 1)").frame(maxWidth: .infinity, alignment: .leading)
-                    Text(String(format: "%.1f Hz", n.frequency)).frame(maxWidth: .infinity, alignment: .leading)
+                    Text("\(n.slot + 1)").frame(width: 40, alignment: .leading)
+                    Text(String(format: "%.1f Hz", n.frequency)).lineLimit(1).frame(maxWidth: .infinity, alignment: .leading)
                     Text(String(format: "%.0f dB", n.depth)).frame(maxWidth: .infinity, alignment: .leading)
                     Text(String(format: "%.0f s", n.age)).frame(maxWidth: .infinity, alignment: .leading)
                     HStack(spacing: 6) {
@@ -111,7 +114,8 @@ struct NotchDetailSheet: View {
                         Button("Release", role: .destructive) { app.releaseNotch(slot: n.slot, channel: channel) }
                     }
                     .buttonStyle(.bordered)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .fixedSize()
+                    .frame(width: 220, alignment: .trailing)
                 }
                 .font(Tokens.Font.numeral(17))
                 .foregroundStyle(Tokens.Color.textPrimary)

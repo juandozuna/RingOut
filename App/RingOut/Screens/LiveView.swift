@@ -20,20 +20,6 @@ struct LiveView: View {
             }
         }
         .background(Tokens.Color.bgBase)
-        .overlay(alignment: .topTrailing) {
-            Button { app.showSettings = true } label: {
-                Image(systemName: "gearshape.fill")
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(Tokens.Color.textSecondary)
-                    .frame(width: Tokens.Size.target, height: Tokens.Size.target)
-            }
-            .buttonStyle(.plain)
-            .padding(.top, 6)
-            .padding(.trailing, 4)
-            .offset(y: Tokens.Size.banner - 6)
-            .accessibilityLabel("Settings")
-            .accessibilityIdentifier("settingsButton")
-        }
         .background(TwoFingerSwipeDown { app.showSettings = true })
         .simultaneousGesture(TapGesture().onEnded { app.touch() })
     }
@@ -81,7 +67,7 @@ struct SimulatedRoomBar: View {
                 .foregroundStyle(Tokens.Color.textSecondary)
             ForEach(0..<app.effectiveChannels, id: \.self) { ch in
                 HStack(spacing: 10) {
-                    Text("Ch \(ch + 1) gain").font(Tokens.Font.label(13)).foregroundStyle(Tokens.Color.textSecondary)
+                    Text("Ch \(ch + 1) gain").font(Tokens.Font.label(13)).foregroundStyle(Tokens.Color.textSecondary).fixedSize()
                     Slider(value: Binding(get: { app.simLoopGain[ch] }, set: { app.setSimLoopGain($0, channel: ch) }), in: -12...9, step: 0.5)
                         .tint(app.simLoopGain[ch] > 0 ? Tokens.Color.ring : Tokens.Color.accent)
                         .frame(width: 170)
@@ -97,6 +83,7 @@ struct SimulatedRoomBar: View {
                     } label: {
                         Text(sourceName(app.simSource[ch]))
                             .font(Tokens.Font.label(13))
+                            .fixedSize()
                             .padding(.horizontal, 10).frame(minHeight: 32)
                             .background(Capsule().fill(Tokens.Color.bgElevated))
                     }

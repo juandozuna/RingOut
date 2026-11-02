@@ -95,7 +95,16 @@ final class AppModel {
             s.name = "Demo"
             s.simulated = true
             show = s
+            if UserDefaults.standard.object(forKey: "demoGain") != nil {
+                let g = UserDefaults.standard.float(forKey: "demoGain")
+                simLoopGain = [g, min(g, -3)]
+            }
             goLive()
+            #if DEBUG
+            if ProcessInfo.processInfo.arguments.contains("-previewDisconnect") {
+                disconnect = Disconnect(since: Date().addingTimeInterval(-12), name: "Scarlett 4i4 USB")
+            }
+            #endif
             return
         }
         if UserDefaults.standard.bool(forKey: Self.setupCompleteKey), let last = store.lastShow() {
@@ -622,7 +631,7 @@ final class AppModel {
             "DSP load": "\(Int(dspLoad * 100))%",
             "Overloads": "\(overloads)",
             "Thermal": device.thermalLabel,
-            "Power": device.onMains ? "Mains" : "Battery",
+            "Power": { switch device.power { case .mains: "Mains"; case .battery: "Battery"; case .unknown: "Unknown" } }(),
         ]
     }
 }

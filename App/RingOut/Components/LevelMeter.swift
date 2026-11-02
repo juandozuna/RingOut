@@ -69,6 +69,7 @@ struct LevelMeter: View {
                 .font(Tokens.Font.label(13))
                 .foregroundStyle(Tokens.Color.textSecondary)
         }
+        .frame(width: Tokens.Size.meterWidth + 12)
         .accessibilityElement(children: .contain)
         .accessibilityValue("\(Int(peak)) dBFS peak")
     }

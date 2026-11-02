@@ -53,7 +53,7 @@ struct StatusBanner: View {
                 Button {
                     if app.hasPIN { app.lock() } else { app.showSettings = true }
                 } label: {
-                    Image(systemName: app.hasPIN ? "lock.open.fill" : "lock.slash")
+                    Image(systemName: app.locked ? "lock.fill" : app.hasPIN ? "lock.open.fill" : "lock.slash")
                         .font(.system(size: 20, weight: .semibold))
                         .foregroundStyle(Tokens.Color.textPrimary)
                         .frame(width: Tokens.Size.target, height: Tokens.Size.target)
@@ -61,6 +61,15 @@ struct StatusBanner: View {
                 .buttonStyle(.plain)
                 .accessibilityLabel(app.hasPIN ? "Lock controls" : "Set a lock PIN")
                 .accessibilityIdentifier("lockButton")
+                Button { app.showSettings = true } label: {
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundStyle(Tokens.Color.textPrimary)
+                        .frame(width: Tokens.Size.target, height: Tokens.Size.target)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Settings")
+                .accessibilityIdentifier("settingsButton")
             }
             .frame(maxWidth: .infinity, alignment: .trailing)
         }

@@ -88,7 +88,7 @@ struct SpectrumRibbon: View {
                     }
                 }
                 if showAxis {
-                    ForEach([(100, "100"), (1000, "1k"), (10000, "10k"), (20000, "20k")], id: \.0) { f, label in
+                    ForEach([(100, "100"), (300, "300"), (1000, "1k"), (3000, "3k"), (10000, "10k")], id: \.0) { f, label in
                         Text(label)
                             .font(Tokens.Font.numeral(11, weight: .medium))
                             .foregroundStyle(Tokens.Color.textSecondary)

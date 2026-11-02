@@ -80,7 +80,7 @@ struct LockOverlay: View {
                                 .accessibilityIdentifier("safetyBypass")
                         }
                     }
-                    .padding(.bottom, 28)
+                    .padding(.bottom, 96)
                 }
             }
         }
@@ -110,6 +110,7 @@ struct LockOverlay: View {
             }
             Button("Cancel") { showPad = false; pin = "" }.foregroundStyle(Tokens.Color.textSecondary).frame(minHeight: Tokens.Size.target)
         }
+        .frame(width: 360)
         .padding(32)
         .background(RoundedRectangle(cornerRadius: 28).fill(Tokens.Color.bgStrip))
     }

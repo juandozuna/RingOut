@@ -39,6 +39,7 @@ struct BigButton: View {
 
         if holdToEngage && !isOn {
             label
+                .accessibilityElement(children: .ignore)
                 .onLongPressGesture(minimumDuration: 0.5, perform: { if enabled { action() } }, onPressingChanged: { pressing = $0 && enabled })
                 .accessibilityAddTraits(.isButton)
                 .accessibilityLabel(title)
@@ -46,6 +47,7 @@ struct BigButton: View {
                 .accessibilityAction { if enabled { action() } }
         } else {
             label
+                .accessibilityElement(children: .ignore)
                 .onTapGesture { if enabled { action() } }
                 .accessibilityAddTraits(.isButton)
                 .accessibilityLabel(title)

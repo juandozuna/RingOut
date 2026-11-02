@@ -9,6 +9,9 @@ struct AudioPortInfo: Hashable, Sendable {
     var channels: Int
 
     var isUSB: Bool { portType == AVAudioSession.Port.usbAudio.rawValue }
+    var isBuiltIn: Bool {
+        [AVAudioSession.Port.builtInMic, .builtInSpeaker, .builtInReceiver].map(\.rawValue).contains(portType)
+    }
 }
 
 /// What the current route looks like from the wizard's point of view.
@@ -68,6 +71,8 @@ final class AudioHost {
 
     var interfaceStatus: InterfaceStatus {
         if simulated { return .simulated }
+        let input = self.input.flatMap { $0.isBuiltIn ? nil : $0 }
+        let output = self.output.flatMap { $0.isBuiltIn ? nil : $0 }
         guard let input, let output else {
             if let any = input ?? output { return .notAnInterface(any.name) }
             return .none

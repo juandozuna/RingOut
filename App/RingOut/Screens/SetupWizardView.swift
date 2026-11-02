@@ -180,6 +180,7 @@ private struct ConnectStep: View {
                     Text("Use simulated rig (no hardware)").font(Tokens.Font.label(17)).foregroundStyle(Tokens.Color.textPrimary)
                     Text("Runs the engine inside a simulated room with a feedback loop. For demos, training and the simulator.")
                         .font(Tokens.Font.body(13)).foregroundStyle(Tokens.Color.textSecondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .tint(Tokens.Color.accent)
@@ -241,6 +242,7 @@ private struct WiringStep: View {
     var body: some View {
         VStack(spacing: 28) {
             Text("How is RingOut wired?").font(Tokens.Font.headline).foregroundStyle(Tokens.Color.textPrimary)
+                .padding(.top, 24)
             HStack(spacing: 20) {
                 ForEach(Topology.allCases) { t in
                     Button { select(t) } label: { TopologyCard(topology: t, selected: draft.topology == t) }
@@ -289,10 +291,10 @@ struct TopologyCard: View {
             WiringDiagram(topology: topology)
             Text(topology.summary).font(Tokens.Font.body(15)).foregroundStyle(Tokens.Color.textSecondary)
                 .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: 0)
         }
         .padding(22)
         .frame(maxWidth: .infinity, minHeight: 300, alignment: .topLeading)
+        .fixedSize(horizontal: false, vertical: true)
         .background(RoundedRectangle(cornerRadius: 20).fill(Tokens.Color.bgStrip))
         .overlay(RoundedRectangle(cornerRadius: 20).stroke(selected ? Tokens.Color.accent : Tokens.Color.hairline, lineWidth: selected ? 3 : 1))
     }
@@ -352,17 +354,23 @@ private struct ChecksStep: View {
                             fix: "Something is overriding the buffer. Turn off Settings › Accessibility › Sound Recognition and Vocal Shortcuts, and quit other audio apps. Above 128 samples RingOut will not run live."))
         let cb = a.lastCallbackFrames
         let match = cb == 0 || cb == a.actualFrames
-        c.append(SetupCheck(id: "match", title: "Input/output buffer match", detail: cb == 0 ? "Waiting for callbacks…" : "Callback delivers \(cb) frames, session reports \(a.actualFrames).",
-                            status: match ? .pass : .fail,
+        let simNote = draft.simulated && !match ? " Expected on the simulated rig (the iOS Simulator batches audio); a real interface must match." : ""
+        c.append(SetupCheck(id: "match", title: "Input/output buffer match", detail: cb == 0 ? "Waiting for callbacks…" : "Callback delivers \(cb) frames, session reports \(a.actualFrames).\(simNote)",
+                            status: match ? .pass : (draft.simulated ? .info : .fail),
                             fix: "A mismatch is the signature of iPadOS accessibility audio features. Turn off Sound Recognition and Vocal Shortcuts in Settings › Accessibility."))
         c.append(SetupCheck(id: "a11y", title: "No accessibility audio features interfering",
                             detail: match && a.actualFrames <= a.requestedFrames ? "No buffer override detected." : "Buffer override detected.",
-                            status: match && a.actualFrames <= a.requestedFrames ? .pass : .warn,
+                            status: match && a.actualFrames <= a.requestedFrames ? .pass : (draft.simulated ? .info : .warn),
                             fix: "Settings › Accessibility › Sound Recognition → Off. Settings › Accessibility › Vocal Shortcuts → Off."))
         c.append(SetupCheck(id: "latency", title: "Interface reports latency",
                             detail: a.interfaceReportsLatency ? String(format: "In %.2f ms · Out %.2f ms", a.reportedInputLatency * 1000, a.reportedOutputLatency * 1000) : "Latency unknown — measure it with the loopback cable in the next step.",
                             status: a.interfaceReportsLatency ? .pass : .warn, fix: nil))
-        c.append(SetupCheck(id: "power", title: "Mains power", detail: app.device.onMains ? "Charging through the hub." : "Running on battery.",
+        let powerDetail: String = switch app.device.power {
+        case .mains: "Charging through the hub."
+        case .battery(let l): "Running on battery (\(Int(l * 100))%)."
+        case .unknown: "Power source unknown."
+        }
+        c.append(SetupCheck(id: "power", title: "Mains power", detail: powerDetail,
                             status: app.device.onMains ? .pass : .warn, fix: "Use a hub with ≥ 85 W PD pass-through and a 100 W brick so the iPad stays at 100 % under load."))
         return c
     }

@@ -16,8 +16,9 @@ struct DiagnosticsView: View {
                         graph("DSP load (audio thread)", app.log.health.map(\.dspLoad), format: "%.0f%%", scale: 100, color: Tokens.Color.accent)
                         graph("Overloads", app.log.health.map { Float($0.overloads) }, format: "%.0f", scale: 1, color: Tokens.Color.ring, ceiling: max(5, Float(app.overloads)))
                         graph("Buffer (actual)", app.log.health.map { Float($0.bufferFrames) }, format: "%.0f smp", scale: 1, color: Tokens.Color.textPrimary, ceiling: 256)
-                        graph("Thermal state", app.log.health.map { Float($0.thermal) }, format: "%.0f", scale: 1, color: Tokens.Color.working, ceiling: 3)
-                        graph("Battery", app.log.health.map { max($0.battery, 0) }, format: "%.0f%%", scale: 100, color: Tokens.Color.safe)
+                        graph("Thermal state", app.log.health.map { Float($0.thermal) }, format: "%.0f", scale: 1, color: Tokens.Color.working, ceiling: 3, text: app.device.thermalLabel)
+                        graph("Battery", app.log.health.map { max($0.battery, 0) }, format: "%.0f%%", scale: 100, color: Tokens.Color.safe,
+                              text: app.device.batteryLevel.map { "\(Int($0 * 100))%" } ?? "Unknown")
                         statusCard
                     }
                     eventLog
@@ -45,12 +46,12 @@ struct DiagnosticsView: View {
         }
     }
 
-    private func graph(_ title: String, _ values: [Float], format: String, scale: Float, color: Color, ceiling: Float = 1) -> some View {
+    private func graph(_ title: String, _ values: [Float], format: String, scale: Float, color: Color, ceiling: Float = 1, text: String? = nil) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Text(title).font(Tokens.Font.label(15)).foregroundStyle(Tokens.Color.textSecondary)
                 Spacer()
-                Text(String(format: format, (values.last ?? 0) * scale)).font(Tokens.Font.numeral(17)).foregroundStyle(Tokens.Color.textPrimary)
+                Text(text ?? String(format: format, (values.last ?? 0) * scale)).font(Tokens.Font.numeral(17)).foregroundStyle(Tokens.Color.textPrimary)
             }
             LoadGraph(values: values, maxCount: 600, color: color, ceiling: ceiling).frame(height: 90)
             Text("Last 10 minutes").font(Tokens.Font.label(11)).foregroundStyle(Tokens.Color.textSecondary)
