@@ -9,6 +9,7 @@ packages:
     path: ..
 settings:
   base:
+    RINGOUT_BUNDLE_ID: com.juandozuna.ringout  # override per signing team: xcodebuild RINGOUT_BUNDLE_ID=...
     SWIFT_VERSION: "6.0"
     SWIFT_DEFAULT_ACTOR_ISOLATION: MainActor
     SWIFT_APPROACHABLE_CONCURRENCY: YES
@@ -29,7 +30,7 @@ targets:
       - sdk: AVFAudio.framework
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.juandozuna.ringout
+        PRODUCT_BUNDLE_IDENTIFIER: $(RINGOUT_BUNDLE_ID)
         PRODUCT_NAME: RingOut
         MARKETING_VERSION: "0.9.0"
         CURRENT_PROJECT_VERSION: "1"
@@ -56,7 +57,7 @@ targets:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.juandozuna.ringout.widget
+        PRODUCT_BUNDLE_IDENTIFIER: $(RINGOUT_BUNDLE_ID).widget
         TARGETED_DEVICE_FAMILY: "2"
         MARKETING_VERSION: "0.9.0"
         CURRENT_PROJECT_VERSION: "1"
