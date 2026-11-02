@@ -6,3 +6,5 @@ xcuserdata/
 *.xcuserstate
 /build/
 graphify-out/
+__pycache__/
+*.pt
