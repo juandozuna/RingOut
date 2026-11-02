@@ -1,0 +1,658 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		027A56F8656EB356C746A1D6 /* CalibrationPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFBBF55CF270CEBBDF0B1B0C /* CalibrationPanel.swift */; };
+		10F48ABC52CB84E04BB5AD9A /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A6DD7DDC1DD64DD001B8F80 /* WelcomeView.swift */; };
+		1C002BF1133C566A731C2908 /* ShowStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21ED360CB6DFA468F3A2B097 /* ShowStore.swift */; };
+		1F8D16F43F6DD0C68268F544 /* RingOutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7802F6137A48CB6425460ABB /* RingOutUITests.swift */; };
+		2030AD9922B530F384709182 /* ChannelStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2A98C5F40943DEF97BEC4B /* ChannelStrip.swift */; };
+		2AA731D6DC35D89CC00C68C4 /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBEEAEBB11A60F4816C81240 /* DiagnosticsView.swift */; };
+		36A54CC4CAE77C406A662BF3 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68261AE360165B85D33E11A0 /* AppModel.swift */; };
+		3FCE15A1404B060929FACE65 /* EventLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACF038BC0B5E82AC83325FC /* EventLog.swift */; };
+		411A3D0ACDC7FE7C40307511 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0B6390FE9E0A7A4692DF3F3 /* Engine.swift */; };
+		53AB14CF6F54B022792873B8 /* Calibrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7807FCDD6BF866313CC2F139 /* Calibrator.swift */; };
+		56D645C0C0980802F2496583 /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E949B8BABAE090A973CC18E /* Tokens.swift */; };
+		5B19B64FAD6C5B37FD9107FB /* RingOutEngine in Frameworks */ = {isa = PBXBuildFile; productRef = C5DF7CB57F8227018906D9B6 /* RingOutEngine */; };
+		5C79A4F5C26BC1D2A412E5E3 /* RingOutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA09FCE76F8422B4075578A /* RingOutApp.swift */; };
+		65E3E7721684BB164186FE6A /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FD5E79483B6AB539C072FA /* RootView.swift */; };
+		663029B4AE8F63E51EF40E0F /* StrengthDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A09F3AB2183F3F5232DC11D /* StrengthDial.swift */; };
+		68892E3D0A2C4E048B4C0D8D /* SetupRing.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11A8EBA4DBD7F53169F83E7 /* SetupRing.swift */; };
+		69C7E663F0E3A3D974FE2266 /* LevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8C6950E491246FC004AFC0 /* LevelMeter.swift */; };
+		7F085FD48C0EEC6D03A011B8 /* SetupWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6D6525CDD097DACC5BA08C /* SetupWizardView.swift */; };
+		8168A1FD35BBDBA253537A37 /* License.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48992C33B8C3C93AEC85216 /* License.swift */; };
+		8238D26AED96B0DE59A30DA5 /* StatusBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E0DDC2549C13537F6C0381A /* StatusBanner.swift */; };
+		A8480843C9748429F0161348 /* AVFAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 530BBF95BD552C3E0BEB7494 /* AVFAudio.framework */; };
+		A8A3CE4F6C655E40D8BD3155 /* AudioHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A65A4262ECA8EF9B0437F /* AudioHost.swift */; };
+		AFF279990CD8C3CB5F91542D /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 729BA5AB50DCA115E5C525C3 /* AudioToolbox.framework */; };
+		C361CC4BD5F71E74A54919EA /* DeviceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ABEF701B3D7CBAC4D42EE16 /* DeviceMonitor.swift */; };
+		C7D9D08A5BFDB6D167D709D3 /* NotchDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7612664C100C84D27E15B282 /* NotchDetailSheet.swift */; };
+		C7FB11788094F52EAB0BFDC7 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC9C070B66FA7283FF11444 /* LiveView.swift */; };
+		CCF5DAFD15F568F3EA3B93DF /* RenderGlue.c in Sources */ = {isa = PBXBuildFile; fileRef = DB9F211F575AA869DCF3F8A9 /* RenderGlue.c */; };
+		CCF7B21854586547E5EC4ED1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC86D4B05377C1A841A5BE9F /* SettingsView.swift */; };
+		CE8D73C80578CB5F019EBB79 /* SpectrumRibbon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7F99CAF1A256F1D778AE27 /* SpectrumRibbon.swift */; };
+		E69E2CF327666DC1483BEFA0 /* BigButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BC5EF8805D2C7E94314300 /* BigButton.swift */; };
+		EA626E1A3BFE1ECC64877EA4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8447BE94D3DBDB09B3004BCD /* Assets.xcassets */; };
+		EB798CACA8DC59FB34A7182E /* ShowFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BE02211F499CFF4741145E /* ShowFile.swift */; };
+		FA16E4A7BC63CCB71B9016C4 /* LockManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CFBD712C369308B03AE5957 /* LockManager.swift */; };
+		FB6FD0DF7AF2F99C089F95AB /* Overlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D3EED0BBC9E8DB00FEB2A09 /* Overlays.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B69C41EE162E41FF67BE7EE2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1918D33CE408AC76396C6253 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 71F02ACC63855B48FDD737F6;
+			remoteInfo = RingOut;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02BE02211F499CFF4741145E /* ShowFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowFile.swift; sourceTree = "<group>"; };
+		0E0DDC2549C13537F6C0381A /* StatusBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBanner.swift; sourceTree = "<group>"; };
+		0E949B8BABAE090A973CC18E /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
+		0EFBF004E12D9E90086C1587 /* RingOutUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = RingOutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		21ED360CB6DFA468F3A2B097 /* ShowStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowStore.swift; sourceTree = "<group>"; };
+		2BA09FCE76F8422B4075578A /* RingOutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingOutApp.swift; sourceTree = "<group>"; };
+		2C7F99CAF1A256F1D778AE27 /* SpectrumRibbon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrumRibbon.swift; sourceTree = "<group>"; };
+		3CC9C070B66FA7283FF11444 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
+		3CFBD712C369308B03AE5957 /* LockManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockManager.swift; sourceTree = "<group>"; };
+		3D3EED0BBC9E8DB00FEB2A09 /* Overlays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Overlays.swift; sourceTree = "<group>"; };
+		40FD5E79483B6AB539C072FA /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		4A6DD7DDC1DD64DD001B8F80 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
+		4FBB7F8F3ACCAB2CF9BEC5AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		530BBF95BD552C3E0BEB7494 /* AVFAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFAudio.framework; path = System/Library/Frameworks/AVFAudio.framework; sourceTree = SDKROOT; };
+		538EEBE040770C74DAB9D768 /* RenderGlue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RenderGlue.h; sourceTree = "<group>"; };
+		68261AE360165B85D33E11A0 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		6ABEF701B3D7CBAC4D42EE16 /* DeviceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceMonitor.swift; sourceTree = "<group>"; };
+		6B8C6950E491246FC004AFC0 /* LevelMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeter.swift; sourceTree = "<group>"; };
+		729BA5AB50DCA115E5C525C3 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		7612664C100C84D27E15B282 /* NotchDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotchDetailSheet.swift; sourceTree = "<group>"; };
+		7802F6137A48CB6425460ABB /* RingOutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingOutUITests.swift; sourceTree = "<group>"; };
+		7807FCDD6BF866313CC2F139 /* Calibrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calibrator.swift; sourceTree = "<group>"; };
+		78BC5EF8805D2C7E94314300 /* BigButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigButton.swift; sourceTree = "<group>"; };
+		7A09F3AB2183F3F5232DC11D /* StrengthDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StrengthDial.swift; sourceTree = "<group>"; };
+		807A7CD765467EAE6A16E537 /* RingOut.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RingOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8447BE94D3DBDB09B3004BCD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88DB1A33B69F9B3C06AC921B /* RingOut-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RingOut-Bridging-Header.h"; sourceTree = "<group>"; };
+		AACF038BC0B5E82AC83325FC /* EventLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventLog.swift; sourceTree = "<group>"; };
+		BA2A98C5F40943DEF97BEC4B /* ChannelStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelStrip.swift; sourceTree = "<group>"; };
+		BBEEAEBB11A60F4816C81240 /* DiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsView.swift; sourceTree = "<group>"; };
+		C01A65A4262ECA8EF9B0437F /* AudioHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHost.swift; sourceTree = "<group>"; };
+		C48992C33B8C3C93AEC85216 /* License.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = License.swift; sourceTree = "<group>"; };
+		CA32A4711BC57CBFEC600DDD /* ipadfeedbackremover */ = {isa = PBXFileReference; lastKnownFileType = folder; name = ipadfeedbackremover; path = ..; sourceTree = SOURCE_ROOT; };
+		CB6D6525CDD097DACC5BA08C /* SetupWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardView.swift; sourceTree = "<group>"; };
+		CFBBF55CF270CEBBDF0B1B0C /* CalibrationPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalibrationPanel.swift; sourceTree = "<group>"; };
+		DB9F211F575AA869DCF3F8A9 /* RenderGlue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RenderGlue.c; sourceTree = "<group>"; };
+		DC86D4B05377C1A841A5BE9F /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		E11A8EBA4DBD7F53169F83E7 /* SetupRing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupRing.swift; sourceTree = "<group>"; };
+		F0B6390FE9E0A7A4692DF3F3 /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		88DE0ABA19647E086FC00066 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B19B64FAD6C5B37FD9107FB /* RingOutEngine in Frameworks */,
+				AFF279990CD8C3CB5F91542D /* AudioToolbox.framework in Frameworks */,
+				A8480843C9748429F0161348 /* AVFAudio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06794FAFA8A23840B79DEB51 /* RingOutUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7802F6137A48CB6425460ABB /* RingOutUITests.swift */,
+			);
+			path = RingOutUITests;
+			sourceTree = "<group>";
+		};
+		18B5285BEF26052E7B3D61AF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8447BE94D3DBDB09B3004BCD /* Assets.xcassets */,
+				4FBB7F8F3ACCAB2CF9BEC5AE /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		25D4FF969CB036ED97AD5D06 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				C01A65A4262ECA8EF9B0437F /* AudioHost.swift */,
+				F0B6390FE9E0A7A4692DF3F3 /* Engine.swift */,
+				DB9F211F575AA869DCF3F8A9 /* RenderGlue.c */,
+				538EEBE040770C74DAB9D768 /* RenderGlue.h */,
+				88DB1A33B69F9B3C06AC921B /* RingOut-Bridging-Header.h */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		38BF3FAD2E6E455D03AD0149 = {
+			isa = PBXGroup;
+			children = (
+				A86CEE2912AD86AE819E5F05 /* Packages */,
+				744F26CA20EF8C98ADB4AFAD /* RingOut */,
+				06794FAFA8A23840B79DEB51 /* RingOutUITests */,
+				47D90B5F65C800A7C91FA006 /* Frameworks */,
+				ECEBBCE13330A2408BB71167 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		47D90B5F65C800A7C91FA006 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				729BA5AB50DCA115E5C525C3 /* AudioToolbox.framework */,
+				530BBF95BD552C3E0BEB7494 /* AVFAudio.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4A1B43196E9FDBB57A75EDD4 /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				0E949B8BABAE090A973CC18E /* Tokens.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		744F26CA20EF8C98ADB4AFAD /* RingOut */ = {
+			isa = PBXGroup;
+			children = (
+				2BA09FCE76F8422B4075578A /* RingOutApp.swift */,
+				25D4FF969CB036ED97AD5D06 /* Audio */,
+				CD93509C372A07C7EA96E388 /* Components */,
+				4A1B43196E9FDBB57A75EDD4 /* DesignSystem */,
+				B242EC5E8AA717A7F559B8D1 /* Model */,
+				18B5285BEF26052E7B3D61AF /* Resources */,
+				BA1B2ED606D2229ACA0AFDDF /* Screens */,
+				D954CEFDD421730E6DF7D514 /* System */,
+			);
+			path = RingOut;
+			sourceTree = "<group>";
+		};
+		A86CEE2912AD86AE819E5F05 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				CA32A4711BC57CBFEC600DDD /* ipadfeedbackremover */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		B242EC5E8AA717A7F559B8D1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				68261AE360165B85D33E11A0 /* AppModel.swift */,
+				7807FCDD6BF866313CC2F139 /* Calibrator.swift */,
+				AACF038BC0B5E82AC83325FC /* EventLog.swift */,
+				C48992C33B8C3C93AEC85216 /* License.swift */,
+				3CFBD712C369308B03AE5957 /* LockManager.swift */,
+				02BE02211F499CFF4741145E /* ShowFile.swift */,
+				21ED360CB6DFA468F3A2B097 /* ShowStore.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		BA1B2ED606D2229ACA0AFDDF /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				CFBBF55CF270CEBBDF0B1B0C /* CalibrationPanel.swift */,
+				BA2A98C5F40943DEF97BEC4B /* ChannelStrip.swift */,
+				BBEEAEBB11A60F4816C81240 /* DiagnosticsView.swift */,
+				3CC9C070B66FA7283FF11444 /* LiveView.swift */,
+				7612664C100C84D27E15B282 /* NotchDetailSheet.swift */,
+				3D3EED0BBC9E8DB00FEB2A09 /* Overlays.swift */,
+				40FD5E79483B6AB539C072FA /* RootView.swift */,
+				DC86D4B05377C1A841A5BE9F /* SettingsView.swift */,
+				CB6D6525CDD097DACC5BA08C /* SetupWizardView.swift */,
+				4A6DD7DDC1DD64DD001B8F80 /* WelcomeView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		CD93509C372A07C7EA96E388 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				78BC5EF8805D2C7E94314300 /* BigButton.swift */,
+				6B8C6950E491246FC004AFC0 /* LevelMeter.swift */,
+				E11A8EBA4DBD7F53169F83E7 /* SetupRing.swift */,
+				2C7F99CAF1A256F1D778AE27 /* SpectrumRibbon.swift */,
+				0E0DDC2549C13537F6C0381A /* StatusBanner.swift */,
+				7A09F3AB2183F3F5232DC11D /* StrengthDial.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		D954CEFDD421730E6DF7D514 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				6ABEF701B3D7CBAC4D42EE16 /* DeviceMonitor.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		ECEBBCE13330A2408BB71167 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				807A7CD765467EAE6A16E537 /* RingOut.app */,
+				0EFBF004E12D9E90086C1587 /* RingOutUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2C65D9202383E8136870949B /* RingOutUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E70B78C9D6C622AFBFD1687D /* Build configuration list for PBXNativeTarget "RingOutUITests" */;
+			buildPhases = (
+				29DFFBD3CB9F9BCEBE962486 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C5442A40EA626DD2578AC527 /* PBXTargetDependency */,
+			);
+			name = RingOutUITests;
+			packageProductDependencies = (
+			);
+			productName = RingOutUITests;
+			productReference = 0EFBF004E12D9E90086C1587 /* RingOutUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		71F02ACC63855B48FDD737F6 /* RingOut */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AFAFF60C770E3417435F4DB5 /* Build configuration list for PBXNativeTarget "RingOut" */;
+			buildPhases = (
+				3BE7DD69E0F9FDCD097CC297 /* Sources */,
+				CEBEB1254E7BC1AF3FF99658 /* Resources */,
+				88DE0ABA19647E086FC00066 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RingOut;
+			packageProductDependencies = (
+				C5DF7CB57F8227018906D9B6 /* RingOutEngine */,
+			);
+			productName = RingOut;
+			productReference = 807A7CD765467EAE6A16E537 /* RingOut.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1918D33CE408AC76396C6253 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2C65D9202383E8136870949B = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 71F02ACC63855B48FDD737F6;
+					};
+					71F02ACC63855B48FDD737F6 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4AB938F128979E892FBF42FF /* Build configuration list for PBXProject "RingOut" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 38BF3FAD2E6E455D03AD0149;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A0DF3202DBD96EFED544E5CF /* XCLocalSwiftPackageReference ".." */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = ECEBBCE13330A2408BB71167 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				71F02ACC63855B48FDD737F6 /* RingOut */,
+				2C65D9202383E8136870949B /* RingOutUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CEBEB1254E7BC1AF3FF99658 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EA626E1A3BFE1ECC64877EA4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		29DFFBD3CB9F9BCEBE962486 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F8D16F43F6DD0C68268F544 /* RingOutUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3BE7DD69E0F9FDCD097CC297 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				36A54CC4CAE77C406A662BF3 /* AppModel.swift in Sources */,
+				A8A3CE4F6C655E40D8BD3155 /* AudioHost.swift in Sources */,
+				E69E2CF327666DC1483BEFA0 /* BigButton.swift in Sources */,
+				027A56F8656EB356C746A1D6 /* CalibrationPanel.swift in Sources */,
+				53AB14CF6F54B022792873B8 /* Calibrator.swift in Sources */,
+				2030AD9922B530F384709182 /* ChannelStrip.swift in Sources */,
+				C361CC4BD5F71E74A54919EA /* DeviceMonitor.swift in Sources */,
+				2AA731D6DC35D89CC00C68C4 /* DiagnosticsView.swift in Sources */,
+				411A3D0ACDC7FE7C40307511 /* Engine.swift in Sources */,
+				3FCE15A1404B060929FACE65 /* EventLog.swift in Sources */,
+				69C7E663F0E3A3D974FE2266 /* LevelMeter.swift in Sources */,
+				8168A1FD35BBDBA253537A37 /* License.swift in Sources */,
+				C7FB11788094F52EAB0BFDC7 /* LiveView.swift in Sources */,
+				FA16E4A7BC63CCB71B9016C4 /* LockManager.swift in Sources */,
+				C7D9D08A5BFDB6D167D709D3 /* NotchDetailSheet.swift in Sources */,
+				FB6FD0DF7AF2F99C089F95AB /* Overlays.swift in Sources */,
+				CCF5DAFD15F568F3EA3B93DF /* RenderGlue.c in Sources */,
+				5C79A4F5C26BC1D2A412E5E3 /* RingOutApp.swift in Sources */,
+				65E3E7721684BB164186FE6A /* RootView.swift in Sources */,
+				CCF7B21854586547E5EC4ED1 /* SettingsView.swift in Sources */,
+				68892E3D0A2C4E048B4C0D8D /* SetupRing.swift in Sources */,
+				7F085FD48C0EEC6D03A011B8 /* SetupWizardView.swift in Sources */,
+				EB798CACA8DC59FB34A7182E /* ShowFile.swift in Sources */,
+				1C002BF1133C566A731C2908 /* ShowStore.swift in Sources */,
+				CE8D73C80578CB5F019EBB79 /* SpectrumRibbon.swift in Sources */,
+				8238D26AED96B0DE59A30DA5 /* StatusBanner.swift in Sources */,
+				663029B4AE8F63E51EF40E0F /* StrengthDial.swift in Sources */,
+				56D645C0C0980802F2496583 /* Tokens.swift in Sources */,
+				10F48ABC52CB84E04BB5AD9A /* WelcomeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C5442A40EA626DD2578AC527 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 71F02ACC63855B48FDD737F6 /* RingOut */;
+			targetProxy = B69C41EE162E41FF67BE7EE2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		01470D32747DD27E8FE4C482 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.juandozuna.RingOutUITests;
+				SDKROOT = iphoneos;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_TARGET_NAME = RingOut;
+			};
+			name = Debug;
+		};
+		06FD0187A8194D55F998B040 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.juandozuna.RingOutUITests;
+				SDKROOT = iphoneos;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = nonisolated;
+				TARGETED_DEVICE_FAMILY = 2;
+				TEST_TARGET_NAME = RingOut;
+			};
+			name = Release;
+		};
+		3FB068D7ACAE029A9BC6FCEE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RingOut/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.9.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juandozuna.ringout;
+				PRODUCT_NAME = RingOut;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RingOut/Audio/RingOut-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		4B1FF890F04D540C4C3C475B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = RingOut/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.9.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.juandozuna.ringout;
+				PRODUCT_NAME = RingOut;
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "RingOut/Audio/RingOut-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		5C8FFF52254F7C78ED1E32F8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		73F66B28E3F212C078998CBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4AB938F128979E892FBF42FF /* Build configuration list for PBXProject "RingOut" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				73F66B28E3F212C078998CBE /* Debug */,
+				5C8FFF52254F7C78ED1E32F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		AFAFF60C770E3417435F4DB5 /* Build configuration list for PBXNativeTarget "RingOut" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3FB068D7ACAE029A9BC6FCEE /* Debug */,
+				4B1FF890F04D540C4C3C475B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E70B78C9D6C622AFBFD1687D /* Build configuration list for PBXNativeTarget "RingOutUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				01470D32747DD27E8FE4C482 /* Debug */,
+				06FD0187A8194D55F998B040 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		A0DF3202DBD96EFED544E5CF /* XCLocalSwiftPackageReference ".." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ..;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C5DF7CB57F8227018906D9B6 /* RingOutEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RingOutEngine;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 1918D33CE408AC76396C6253 /* Project object */;
+}
