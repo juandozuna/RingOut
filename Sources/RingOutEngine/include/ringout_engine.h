@@ -63,7 +63,16 @@ typedef enum {
     RO_PARAM_PRESET = 7,           // ro_preset. Tunes detector + isolator.
     RO_PARAM_RING_OUT_MODE = 8,    // 0/1. While 1, confirmed rings are pinned as fixed (up to 4).
     RO_PARAM_INPUT_TRIM_DB = 9,    // -24..+24, default 0 (Topology B gain trim).
+    RO_PARAM_ISOLATOR = 10,        // ro_isolator. Default NEURAL with trained weights at 48 kHz, else DSP.
 } ro_param;
+
+// Isolator stage. The neural model only runs at 48 kHz; at other rates the
+// neural modes fall back to RO_ISOLATOR_DSP (reported in the snapshot).
+typedef enum {
+    RO_ISOLATOR_DSP = 0,         // DSP stand-in (soft cuts + ring duck)
+    RO_ISOLATOR_NEURAL = 1,      // trained TCN only
+    RO_ISOLATOR_NEURAL_DSP = 2,  // TCN followed by the DSP stand-in
+} ro_isolator;
 
 typedef enum {
     RO_PRESET_SPEECH = 0,
@@ -120,6 +129,7 @@ typedef struct {
     float gain_reduction_db;               // total wet-vs-dry reduction, <= 0
     bool loop_gain_warning;                // oscillation guard tripped
     bool multi_talker;                     // > 1 dominant voice
+    ro_isolator isolator;                  // isolator actually running (after fallback)
     uint64_t frames_processed;
 } ro_channel_snapshot;
 
@@ -152,6 +162,16 @@ typedef struct {
 
 // Pops one event; returns false when the queue is empty.
 bool ro_engine_pop_event(ro_engine *e, ro_event *out);
+
+// ---- Neural isolator ----------------------------------------------------
+
+// Runs a fresh neural isolator over the parity signal embedded with the
+// weights (in irregular block sizes) and returns the max abs error against the
+// PyTorch reference output. Allocates; not for the audio thread. Returns a
+// large value if the model cannot run.
+float ro_neural_selftest(void);
+// Identifier of the compiled-in weights, e.g. "random-init-7b081e515dcab250".
+const char *ro_neural_model_id(void);
 
 // ---- Simulated feedback loop (demo + tests) ------------------------------
 //

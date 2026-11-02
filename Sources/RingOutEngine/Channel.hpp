@@ -9,6 +9,7 @@
 #include "Events.hpp"
 #include "FeedbackDetector.hpp"
 #include "Isolator.hpp"
+#include "NeuralIsolator.hpp"
 #include "NotchBank.hpp"
 
 namespace ro {
@@ -24,6 +25,7 @@ struct ChannelParams {
     int preset = RO_PRESET_SPEECH;
     bool ringOut = false;
     float trimDb = 0.0f;
+    int isolator = -1;  // ro_isolator; -1 = default (see kDefaultIsolator in Channel.cpp)
 };
 
 class Channel {
@@ -44,6 +46,9 @@ private:
     void applyParams(bool snap);
     void meterBlock(const float* x, int n, float& peakAcc, float& powEwma, bool& clip);
     void resetMeters();
+    ro_isolator activeIsolator() const;
+    // Runs one isolator stage in place, cross-faded by its enable ramp.
+    float runStage(Isolator& iso, LinearRamp& mix, int n, const IsolatorSide& side);
 
     ChannelParams p_;
     double fs_ = 48000;
@@ -52,7 +57,7 @@ private:
     bool prepared_ = false;
     uint64_t frames_ = 0;
 
-    std::vector<float> dryRaw_, dry_, cond_, wet_;
+    std::vector<float> dryRaw_, dry_, cond_, wet_, stage_;
 
     LinearRamp trim_, strength_, mute_, hpfMix_;
     double dcX1_ = 0, dcY1_ = 0, dcR_ = 0.9995;
@@ -60,7 +65,12 @@ private:
 
     FeedbackDetector det_;
     NotchBank notches_;
-    std::unique_ptr<Isolator> iso_;
+    // Isolator chain: [neural] -> [DSP], each stage enabled by a ramp so mode
+    // switches cross-fade. Both are prepared up front; nothing is allocated
+    // on the audio thread.
+    std::unique_ptr<NeuralIsolator> neural_;
+    std::unique_ptr<Isolator> dsp_;
+    LinearRamp neuralMix_, dspMix_;
 
     // Strength mix: equal-power law using the measured dry/wet correlation.
     double cDW_ = 1, cDD_ = 1, cWW_ = 1;

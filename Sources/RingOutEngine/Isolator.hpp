@@ -1,14 +1,11 @@
 // Isolator stage: runs on the notched signal with the detector's side vector
 // as a conditioning input and removes residual feedback the notches missed.
 //
-// MODEL SEAM. The PRD's isolator is a causal TCN compiled to BNNSGraph. No
-// trained weights exist yet, so the only implementation today is
-// ResidualIsolator, a plain DSP fallback. A model-backed implementation
-// (e.g. `BnnsGraphIsolator`) would subclass Isolator, compile the graph and
-// allocate its state tensors in prepare(), run one sample-aligned
-// BNNSGraphContextExecute per block in process(), and be returned from
-// makeIsolator() below. Everything else in the engine is unaware of which one
-// is running.
+// Two implementations: NeuralIsolator (the trained causal TCN from ml/,
+// 48 kHz only) and ResidualIsolator, the plain DSP stand-in returned by
+// makeIsolator(). Channel owns one of each and runs [neural] -> [DSP]
+// according to RO_PARAM_ISOLATOR; everything else in the engine is unaware of
+// which one is running.
 #pragma once
 
 #include <memory>

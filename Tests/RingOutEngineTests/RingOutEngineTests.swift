@@ -239,7 +239,9 @@ final class CommandTests: XCTestCase {
     }
 
     func testMuteRampsToSilenceIn5ms() {
-        let e = makeEngine()
+        // DSP isolator: the neural stage turns a pure steady sine down ~6 dB
+        // (a steady sinusoid is what a ring looks like), which is not under test here.
+        let e = makeEngine { ro_engine_set_param($0, -1, RO_PARAM_ISOLATOR, Float(RO_ISOLATOR_DSP.rawValue)) }
         defer { ro_engine_destroy(e) }
         let x = fmTone(freq: 440, db: -12, seconds: 0.5)
         _ = process(e, Array(x[0..<4800]), block: 64)

@@ -9,9 +9,16 @@ constexpr float kClipLevel = 0.94406f;        // -0.5 dBFS
 constexpr double kRingStateHoldS = 2.0;
 constexpr double kPeakHoldS = 2.0;
 constexpr float kPeakHoldFallDbPerS = 20.0f;
+constexpr double kIsolatorFadeS = 0.05;       // cross-fade on mode change (>= the TCN receptive field)
+
+// Isolator mode when RO_PARAM_ISOLATOR was never set. It only applies with
+// trained weights: the placeholder (random-init) export defaults to the DSP
+// stand-in. Neural modes also fall back to DSP whenever the model cannot run
+// (sample rate != 48 kHz).
+constexpr ro_isolator kDefaultIsolator = RO_ISOLATOR_NEURAL;
 }  // namespace
 
-Channel::Channel() : iso_(makeIsolator()) {}
+Channel::Channel() : neural_(std::make_unique<NeuralIsolator>()), dsp_(makeIsolator()) {}
 
 bool Channel::prepare(double fs, int maxFrames, int index) {
     fs_ = fs;
@@ -21,10 +28,12 @@ bool Channel::prepare(double fs, int maxFrames, int index) {
     dry_.assign(maxFrames, 0.0f);
     cond_.assign(maxFrames, 0.0f);
     wet_.assign(maxFrames, 0.0f);
+    stage_.assign(maxFrames, 0.0f);
 
     if (!det_.prepare(fs)) return false;
     notches_.prepare(fs);
-    if (!iso_ || !iso_->prepare(fs, maxFrames)) return false;
+    if (!dsp_ || !dsp_->prepare(fs, maxFrames)) return false;
+    neural_->prepare(fs, maxFrames);  // false = model not valid here; usable() gates it
 
     dcR_ = 1.0 - kTwoPi * 5.0 / fs;  // ~5 Hz DC blocker
     dcX1_ = dcY1_ = 0;
@@ -34,6 +43,9 @@ bool Channel::prepare(double fs, int maxFrames, int index) {
     trim_.setLength(64);
     strength_.setLength(64);
     hpfMix_.setLength(64);
+    const int isoFade = std::max(1, static_cast<int>(std::lround(kIsolatorFadeS * fs)));
+    neuralMix_.setLength(isoFade);
+    dspMix_.setLength(isoFade);
     mute_.setLength(std::max(1, static_cast<int>(std::lround(0.005 * fs))));
     applyParams(true);
 
@@ -74,8 +86,22 @@ void Channel::applyParams(bool snap) {
         mute_.set(m);
         hpfMix_.set(h);
     }
+    // Isolator stages. A stage that was fully off restarts from a clean state.
+    const ro_isolator iso = activeIsolator();
+    const float nOn = iso != RO_ISOLATOR_DSP ? 1.0f : 0.0f;
+    const float dOn = iso != RO_ISOLATOR_NEURAL ? 1.0f : 0.0f;
+    if (snap) {
+        neuralMix_.snap(nOn);
+        dspMix_.snap(dOn);
+    } else {
+        if (nOn == 1.0f && neuralMix_.target == 0.0f && neuralMix_.settled()) neural_->reset();
+        if (dOn == 1.0f && dspMix_.target == 0.0f && dspMix_.settled()) dsp_->reset();
+        neuralMix_.set(nOn);
+        dspMix_.set(dOn);
+    }
     det_.setPreset(p_.preset);
-    if (iso_) iso_->setPreset(p_.preset);
+    neural_->setPreset(p_.preset);
+    dsp_->setPreset(p_.preset);
     notches_.setSettings(NotchSettings{p_.holdS, p_.maxAuto, p_.ringOut});
 }
 
@@ -92,6 +118,7 @@ void Channel::setParam(ro_param p, float v) {
         case RO_PARAM_PRESET: p_.preset = clampv(static_cast<int>(std::lround(v)), 0, 2); break;
         case RO_PARAM_RING_OUT_MODE: p_.ringOut = v >= 0.5f; break;
         case RO_PARAM_INPUT_TRIM_DB: p_.trimDb = clampv(v, -24.0f, 24.0f); break;
+        case RO_PARAM_ISOLATOR: p_.isolator = clampv(static_cast<int>(std::lround(v)), 0, 2); break;
         default: return;
     }
     applyParams(!prepared_);
@@ -109,6 +136,29 @@ void Channel::command(ro_command c, float a, float b, EventQueue* q) {
         case RO_CMD_RESET_METERS: resetMeters(); break;
         default: break;
     }
+}
+
+ro_isolator Channel::activeIsolator() const {
+    const int mode = p_.isolator >= 0                       ? p_.isolator
+                     : NeuralIsolator::placeholderWeights() ? RO_ISOLATOR_DSP
+                                                            : kDefaultIsolator;
+    if (mode != RO_ISOLATOR_DSP && !neural_->usable()) return RO_ISOLATOR_DSP;
+    return static_cast<ro_isolator>(mode);
+}
+
+float Channel::runStage(Isolator& iso, LinearRamp& mix, int n, const IsolatorSide& side) {
+    if (mix.settled() && mix.cur == 0.0f) return 0.0f;
+    if (mix.settled() && mix.cur == 1.0f) {
+        iso.process(wet_.data(), n, side);
+        return iso.activity();
+    }
+    std::memcpy(stage_.data(), wet_.data(), sizeof(float) * n);
+    iso.process(stage_.data(), n, side);
+    for (int i = 0; i < n; ++i) {
+        const float m = mix.next();
+        wet_[i] += m * (stage_[i] - wet_[i]);
+    }
+    return iso.activity() * mix.cur;
 }
 
 void Channel::resetMeters() {
@@ -164,9 +214,10 @@ void Channel::process(const float* in, float* out, int n, EventQueue* q) {
     std::memcpy(wet_.data(), cond_.data(), sizeof(float) * n);
     notches_.process(wet_.data(), n);
 
-    // 5. Isolator, conditioned on the detector's side vector.
-    iso_->process(wet_.data(), n, IsolatorSide{&det_.side(), &notches_, newFrame});
-    isoActivity_ = std::max(iso_->activity(), isoActivity_ * 0.995f);
+    // 5. Isolator chain (neural, then DSP), conditioned on the detector's side vector.
+    const IsolatorSide side{&det_.side(), &notches_, newFrame};
+    const float act = std::max(runStage(*neural_, neuralMix_, n, side), runStage(*dsp_, dspMix_, n, side));
+    isoActivity_ = std::max(act, isoActivity_ * 0.995f);
 
     // 6. Strength mix (equal power for the measured dry/wet correlation, so the
     //    level is flat for both coherent and decorrelated wet), limiter, mute.
@@ -281,6 +332,7 @@ void Channel::fillSnapshot(ro_channel_snapshot& s) {
     }
     s.multi_talker = multiTalkerOn_;
     s.frames_processed = frames_;
+    s.isolator = activeIsolator();
 
     if (p_.bypass || p_.mute) s.state = RO_STATE_BYPASS;
     else if (s.loop_gain_warning || (everRang && now - ringT < kRingStateHoldS)) s.state = RO_STATE_RING;
